@@ -1,9 +1,5 @@
 import {
   Home,
-  LineChart,
-  Map,
-  FileText,
-  Package,
   User,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -17,18 +13,13 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarProvider,
-  SidebarInset,
   SidebarFooter,
 } from '@/components/ui/sidebar';
 import { DashboardHeader } from '@/components/dashboard-header';
 import { Logo } from '@/components/logo';
 
 const navItems = [
-  { href: '/community-mobiliser', label: 'Dashboard', icon: Home, query: { tab: 'synthesis' } },
-  { href: '/community-mobiliser', label: 'Geospatial View', icon: Map, query: { tab: 'geospatial' } },
-  { href: '/community-mobiliser', label: 'Analytics', icon: LineChart, query: { tab: 'analytics' } },
-  { href: '/community-mobiliser', label: 'Reports', icon: FileText, query: { tab: 'reports' } },
-  { href: '/community-mobiliser', label: 'Inventory', icon: Package, query: { tab: 'inventory' } },
+  { href: '/community-mobiliser', label: 'Dashboard', icon: Home },
 ];
 
 export default function CommunityMobiliserLayout({
@@ -43,10 +34,10 @@ export default function CommunityMobiliserLayout({
             <Logo />
           </SidebarHeader>
           <SidebarContent>
-            <SidebarMenu className="mt-[10%]">
+            <SidebarMenu>
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
-                  <Link href={{ pathname: item.href, query: item.query }} passHref>
+                  <Link href={item.href} passHref>
                     <SidebarMenuButton tooltip={item.label}>
                       <item.icon />
                       <span>{item.label}</span>
