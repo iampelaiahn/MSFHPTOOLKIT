@@ -5,10 +5,10 @@ export function Logo({ className }: { className?: string }) {
   return (
     <div className={cn("flex items-center", className)}>
       <Image
-        src="https://i.imgur.com/ccXkOzW.png"
+        src="https://i.imgur.com/ZZopidV.png"
         alt="OutreachRx Logo"
-        width={138}
-        height={24}
+        width={163}
+        height={44}
         priority
         className="dark:invert"
       />
