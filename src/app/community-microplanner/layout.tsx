@@ -29,7 +29,7 @@ const navItems = [
   { href: '/community-microplanner/risk-assessment', label: 'Risk Assessment', icon: ShieldCheck },
   { href: '/community-microplanner/hivst-register', label: 'HIVST Register', icon: Users },
   { href: '#refer', label: 'Refer a Peer', icon: QrCode },
-  { href: '#education', label: 'Health Education', icon: BookHeart },
+  { href: '/community-microplanner/health-education', label: 'Health Education', icon: BookHeart },
 ];
 
 export default function CommunityMicroplannerLayout({
