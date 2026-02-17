@@ -7,7 +7,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { GoogleMapsProvider } from "./_components/google-maps-provider";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { TrendingUp, Users, Link as LinkIcon, Target, Package } from "lucide-react";
+import { TrendingUp, Users, Link as LinkIcon, Target } from "lucide-react";
+import { InventoryDashboard } from "./_components/inventory-dashboard";
 
 const kpiData = [
   { title: "Total Referrals", value: "1,284", change: "+20.1% from last month", icon: Users },
@@ -72,16 +73,8 @@ export default function CommunityMobiliserPage() {
             </CardContent>
         </Card>
       </TabsContent>
-       <TabsContent value="inventory">
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2"><Package /> Inventory Management</CardTitle>
-                <CardDescription>Track and manage outreach supplies.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <p>Inventory management functionality will be available here.</p>
-            </CardContent>
-        </Card>
+       <TabsContent value="inventory" className="mt-0">
+        <InventoryDashboard />
       </TabsContent>
     </Tabs>
   );
