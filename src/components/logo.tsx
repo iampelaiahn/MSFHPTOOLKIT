@@ -10,7 +10,6 @@ export function Logo({ className }: { className?: string }) {
         width={163}
         height={44}
         priority
-        className="dark:invert"
       />
     </div>
   );
