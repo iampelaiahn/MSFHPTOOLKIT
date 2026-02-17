@@ -35,7 +35,7 @@ const analysisCards = [
       { label: "142 TRUST NODES" },
       { label: "18 BRIDGES" },
     ],
-    href: "/master-supervisor/social-network-analysis",
+    href: "/community-mobiliser/assessment-repo/social-network-analysis",
   },
 ];
 
