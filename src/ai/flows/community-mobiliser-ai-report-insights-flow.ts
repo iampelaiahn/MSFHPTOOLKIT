@@ -12,27 +12,75 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const WeeklyReportInputSchema = z.object({
-  weeklyReportData: z
-    .string()
-    .describe('The raw text content of the weekly performance report.'),
-  historicalContext: z
-    .string()
-    .optional()
-    .describe(
-      'Optional historical data or context from previous reports to aid in trend analysis.'
-    ),
+  communityData: z
+    .object({
+      peopleTested: z
+        .number()
+        .describe('Number of people tested by Community Microplanners.'),
+      hivstKitsDistributed: z
+        .number()
+        .describe(
+          'Number of HIVST kits distributed by Community Microplanners.'
+        ),
+      referralsMade: z
+        .number()
+        .describe('Number of referrals made by Community Microplanners.'),
+    })
+    .describe('Data from Community Microplanner activities.'),
+  facilityData: z
+    .object({
+      referralsReconciled: z
+        .number()
+        .describe('Number of referrals reconciled at the facility.'),
+    })
+    .describe('Data from Facility Microplanner activities.'),
+  inventoryData: z
+    .object({
+      hivstKitsDispensed: z
+        .number()
+        .describe(
+          'Total number of HIVST kits dispensed from inventory to microplanners.'
+        ),
+    })
+    .describe('Data from the inventory system.'),
+  geospatialData: z
+    .object({
+      hotspotCoverage: z
+        .string()
+        .describe('The percentage of hotspot coverage, e.g., "88%".'),
+    })
+    .describe('Geospatial data.'),
 });
 export type WeeklyReportInput = z.infer<typeof WeeklyReportInputSchema>;
 
 const WeeklyReportOutputSchema = z.object({
-  summary: z.string().describe('A concise summary of the weekly performance report.'),
-  keyTrends: z.array(z.string()).describe('Identified key trends in the report data.'),
-  areasNeedingAttention: z
+  summary: z
+    .string()
+    .describe(
+      'A concise, data-driven summary of the weekly performance.'
+    ),
+  dataDiscrepancies: z
     .array(z.string())
-    .describe('Specific areas highlighted in the report that require attention.'),
+    .describe(
+      'A list of any identified data mismatches or discrepancies that require investigation.'
+    ),
+  keyMetrics: z
+    .array(
+      z.object({
+        metric: z.string().describe('The name of the metric.'),
+        value: z.string().describe('The value of the metric.'),
+        insight: z
+          .string()
+          .optional()
+          .describe('A brief insight or trend related to the metric.'),
+      })
+    )
+    .describe('A list of key performance metrics.'),
   actionableInsights: z
     .array(z.string())
-    .describe('Actionable recommendations based on the report data and identified trends.'),
+    .describe(
+      'A list of actionable recommendations to improve performance based on the analysis.'
+    ),
 });
 export type WeeklyReportOutput = z.infer<typeof WeeklyReportOutputSchema>;
 
@@ -46,28 +94,31 @@ const communityMobiliserAiReportInsightsPrompt = ai.definePrompt({
   name: 'communityMobiliserAiReportInsightsPrompt',
   input: {schema: WeeklyReportInputSchema},
   output: {schema: WeeklyReportOutputSchema},
-  prompt: `You are an expert data analyst specializing in community health outreach performance reports.
-Your task is to analyze the provided weekly performance report data and extract key information.
+  prompt: `You are an expert data analyst for a community health organization.
+Your task is to analyze the provided weekly data from different sources to generate an integrated performance report.
 
-First, provide a concise summary of the entire report.
-Then, identify and list any significant key trends observed in the data.
-Next, pinpoint and list specific areas that clearly need attention based on the report's findings.
-Finally, generate actionable insights and recommendations that a Community Health Mobiliser can use to make informed operational decisions and improve outcomes.
+**Input Data:**
+- People Tested (Community): {{{communityData.peopleTested}}}
+- HIVST Kits Distributed (Community): {{{communityData.hivstKitsDistributed}}}
+- Referrals Made (Community): {{{communityData.referralsMade}}}
+- Referrals Reconciled (Facility): {{{facilityData.referralsReconciled}}}
+- HIVST Kits Dispensed (Inventory): {{{inventoryData.hivstKitsDispensed}}}
+- Hotspot Coverage: {{{geospatialData.hotspotCoverage}}}
 
-Weekly Performance Report Data:
-"""
-{{{weeklyReportData}}}
-"""
+**Analysis Steps:**
+1.  **Cross-Check for Discrepancies:**
+    *   Compare 'People Tested (Community)' with 'HIVST Kits Dispensed (Inventory)'. If they are not equal, add a detailed message to the \`dataDiscrepancies\` array explaining the mismatch (e.g., "Mismatch found: 200 people reported tested, but 215 HIVST kits were dispensed from inventory.").
+    *   Calculate the linkage rate: (Referrals Reconciled / Referrals Made).
 
-{{#if historicalContext}}
-Historical Context:
-"""
-{{{historicalContext}}}
-"""
-{{/if}}
+2.  **Synthesize Key Metrics:**
+    *   Populate the \`keyMetrics\` array with the provided data points.
+    *   Also include a calculated "Linkage Rate" metric, formatted as a percentage. For the value, use the format "X / Y (Z%)".
 
-Please ensure your response is structured exactly as per the specified JSON schema for summary, keyTrends, areasNeedingAttention, and actionableInsights.
-`,
+3.  **Generate Summary & Insights:**
+    *   Write a concise \`summary\` of the week's performance, highlighting both achievements and challenges based on all the data.
+    *   Based on all the data, generate a list of 2-3 concrete \`actionableInsights\`. If the linkage rate is below 75%, one insight must be about improving it. If there's a kit discrepancy, an insight must be about investigating it.
+
+Generate a JSON response according to the output schema. Ensure all fields in the output schema are populated.`,
 });
 
 const communityMobiliserAiReportInsightsFlow = ai.defineFlow(
