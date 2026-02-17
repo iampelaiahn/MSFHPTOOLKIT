@@ -1,11 +1,17 @@
 import { cn } from "@/lib/utils";
-import { Activity } from "lucide-react";
+import Image from "next/image";
 
 export function Logo({ className }: { className?: string }) {
   return (
-    <div className={cn("flex items-center gap-2 font-headline font-bold text-primary", className)}>
-      <Activity className="h-6 w-6" />
-      <span className="tracking-tighter">OutreachRx</span>
+    <div className={cn("flex items-center", className)}>
+      <Image
+        src="https://i.imgur.com/i1v7Dmh.png"
+        alt="OutreachRx Logo"
+        width={108}
+        height={24}
+        priority
+        className="dark:invert"
+      />
     </div>
   );
 }
