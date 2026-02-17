@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -48,7 +49,15 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <main className="flex flex-1 flex-col items-center justify-center">
-        <div className="mb-12 text-center">
+        <div className="mb-12 text-center flex flex-col items-center">
+           <Image
+            src="https://i.imgur.com/BGdgfmI.png"
+            alt="Logo"
+            width={250}
+            height={69}
+            className="mb-6"
+            priority
+          />
           <h1 className="text-4xl font-headline font-bold tracking-tight text-foreground sm:text-5xl">
             Health promotion toolkit
           </h1>
