@@ -7,6 +7,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { GoogleMapsProvider } from "./_components/google-maps-provider";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { TrendingUp, Users, Link as LinkIcon, Target } from "lucide-react";
+
+const kpiData = [
+  { title: "Total Referrals", value: "1,284", change: "+20.1% from last month", icon: Users },
+  { title: "Linkage to Care Rate", value: "72.3%", change: "+2.5% from last month", icon: LinkIcon },
+  { title: "Hotspot Coverage", value: "88%", change: "-1.2% from last month", icon: Target },
+  { title: "Positive Yield", value: "5.8%", change: "+0.5% from last month", icon: TrendingUp },
+];
 
 export default function CommunityMobiliserPage() {
   const searchParams = useSearchParams();
@@ -37,15 +45,20 @@ export default function CommunityMobiliserPage() {
         </GoogleMapsProvider>
       </TabsContent>
       <TabsContent value="analytics">
-        <Card>
-            <CardHeader>
-                <CardTitle>Analytics</CardTitle>
-                <CardDescription>Detailed trends and data analysis.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <p>Advanced analytics tools will be available here.</p>
-            </CardContent>
-        </Card>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {kpiData.map((kpi) => (
+              <Card key={kpi.title}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">{kpi.title}</CardTitle>
+                  <kpi.icon className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                  <div className="text-2xl font-bold">{kpi.value}</div>
+                  <p className={`text-xs ${kpi.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>{kpi.change}</p>
+              </CardContent>
+              </Card>
+          ))}
+        </div>
       </TabsContent>
       <TabsContent value="reports">
         <Card>
