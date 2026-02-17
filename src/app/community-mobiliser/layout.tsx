@@ -42,7 +42,7 @@ export default function CommunityMobiliserLayout({
             <Logo />
           </SidebarHeader>
           <SidebarContent>
-            <SidebarMenu>
+            <SidebarMenu className="mt-[10%]">
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
                   <Link href={{ pathname: item.href, query: item.query }} passHref>
