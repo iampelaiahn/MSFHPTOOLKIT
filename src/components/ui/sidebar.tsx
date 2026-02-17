@@ -368,14 +368,40 @@ SidebarHeader.displayName = "SidebarHeader"
 const SidebarFooter = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div">
->(({ className, ...props }, ref) => {
+>(({ className, children, ...props }, ref) => {
+  const { toggleSidebar, state, isMobile } = useSidebar();
+  
+  // Don't show toggle on mobile, it's handled by the sheet trigger
+  if (isMobile) {
+    return (
+      <div
+        ref={ref}
+        data-sidebar="footer"
+        className={cn("flex flex-col gap-2 p-2 border-t border-sidebar-border", className)}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+
   return (
     <div
       ref={ref}
       data-sidebar="footer"
-      className={cn("flex flex-col gap-2 p-2", className)}
+      className={cn("flex flex-col gap-2 p-2 border-t border-sidebar-border", className)}
       {...props}
-    />
+    >
+      {children}
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton onClick={toggleSidebar} tooltip={state === 'expanded' ? 'Collapse' : 'Expand'}>
+            <PanelLeft className={cn("transition-transform duration-300", state === 'collapsed' && "rotate-180")} />
+            <span>{state === 'expanded' ? 'Collapse' : 'Expand'}</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    </div>
   )
 })
 SidebarFooter.displayName = "SidebarFooter"
