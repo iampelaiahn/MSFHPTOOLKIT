@@ -1,6 +1,7 @@
 import {
   Home,
   User,
+  ClipboardList,
 } from 'lucide-react';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -20,6 +21,7 @@ import { Logo } from '@/components/logo';
 
 const navItems = [
   { href: '/community-mobiliser', label: 'Dashboard', icon: Home },
+  { href: '/community-mobiliser/assessment-repo', label: 'Assessment Repo', icon: ClipboardList },
 ];
 
 export default function CommunityMobiliserLayout({
