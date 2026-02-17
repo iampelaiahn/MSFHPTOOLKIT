@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, BarChart3, Settings2, Stethoscope, Users } from "lucide-react";
+import { ArrowRight, Users, UserCog, Presentation, Hospital } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Logo } from "@/components/logo";
 
@@ -23,13 +23,13 @@ const roles: Role[] = [
     name: "Master Supervisor",
     description: "System configuration, tool design, and high-level oversight.",
     href: "/master-supervisor",
-    icon: Settings2,
+    icon: UserCog,
   },
   {
     name: "Community Health Mobiliser",
     description: "Data synthesis and operational decision-making.",
     href: "/community-mobiliser",
-    icon: BarChart3,
+    icon: Presentation,
   },
   {
     name: "Community-Based Microplanner",
@@ -41,7 +41,7 @@ const roles: Role[] = [
     name: "Facility-Based Microplanner",
     description: "Clinical linkage, referral reconciliation, and appointments.",
     href: "/facility-microplanner",
-    icon: Stethoscope,
+    icon: Hospital,
   },
 ];
 
