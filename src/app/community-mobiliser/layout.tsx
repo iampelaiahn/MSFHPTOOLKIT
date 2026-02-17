@@ -55,8 +55,9 @@ export default function CommunityMobiliserLayout({
               ))}
             </SidebarMenu>
           </SidebarContent>
-          <span className="text-xs font-semibold text-sidebar-foreground/70 text-center px-2 pb-1 group-data-[collapsible=icon]:hidden">Community Health Mobiliser</span>
-          <SidebarFooter />
+          <SidebarFooter>
+            <span className="text-xs font-semibold text-sidebar-foreground/70 text-center group-data-[collapsible=icon]:hidden">Community Health Mobiliser</span>
+          </SidebarFooter>
         </Sidebar>
         <div className="flex flex-1 flex-col">
           <DashboardHeader 
