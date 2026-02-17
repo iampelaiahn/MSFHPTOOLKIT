@@ -9,7 +9,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Users, UserCog, Presentation, Hospital } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { Logo } from "@/components/logo";
 
 type Role = {
   name: string;
@@ -50,7 +49,6 @@ export default function Home() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <main className="flex flex-1 flex-col items-center justify-center">
         <div className="mb-12 text-center">
-          <Logo className="justify-center text-5xl mb-4" />
           <h1 className="text-4xl font-headline font-bold tracking-tight text-foreground sm:text-5xl">
             Health promotion toolkit
           </h1>
