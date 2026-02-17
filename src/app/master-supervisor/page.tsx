@@ -21,11 +21,13 @@ export default function MasterSupervisorPage() {
 
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-      <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value="tools">Tool Designer</TabsTrigger>
-        <TabsTrigger value="users">User Management</TabsTrigger>
-        <TabsTrigger value="ai-designer">AI Question Designer</TabsTrigger>
-      </TabsList>
+      <div className="sticky top-16 z-20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pb-2">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="tools">Tool Designer</TabsTrigger>
+          <TabsTrigger value="users">User Management</TabsTrigger>
+          <TabsTrigger value="ai-designer">AI Question Designer</TabsTrigger>
+        </TabsList>
+      </div>
       <TabsContent value="tools">
         <ToolDesigner />
       </TabsContent>

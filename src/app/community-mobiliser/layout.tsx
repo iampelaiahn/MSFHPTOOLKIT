@@ -37,8 +37,7 @@ export default function CommunityMobiliserLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full flex-col bg-muted/40">
-        <Sidebar collapsible="icon">
+        <Sidebar collapsible="icon" variant="floating">
           <SidebarHeader>
             <Logo />
           </SidebarHeader>
@@ -56,18 +55,18 @@ export default function CommunityMobiliserLayout({
               ))}
             </SidebarMenu>
           </SidebarContent>
+          <span className="text-xs font-semibold text-sidebar-foreground/70 text-center px-2 pb-1 group-data-[collapsible=icon]:hidden">Community Health Mobiliser</span>
           <SidebarFooter />
         </Sidebar>
-        <div className="flex flex-col sm:pl-14">
+        <div className="flex flex-1 flex-col">
           <DashboardHeader 
             title="Community Health Mobiliser" 
             user={{ name: 'Amina Yusuf', avatarId: 'community-mobiliser-avatar' }}
           />
-           <main className="flex-1 p-4 sm:px-6 sm:py-0">
+          <main className="flex-1 px-4 pb-4 sm:px-6 mt-16">
             {children}
           </main>
         </div>
-      </div>
     </SidebarProvider>
   );
 }
