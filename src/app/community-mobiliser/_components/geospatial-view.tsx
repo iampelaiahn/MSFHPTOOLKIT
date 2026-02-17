@@ -20,32 +20,30 @@ export function GeospatialView() {
                 <CardDescription>Geospatial view of hotspot activity and outreach coverage.</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="relative">
-                    <div className="absolute top-4 left-4 z-10 rounded-lg border bg-card p-2 shadow-lg">
-                        <RadioGroup defaultValue="hotspots" className="flex gap-4">
-                            <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="hotspots" id="r1" />
-                            <Label htmlFor="r1">Hotspots</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="tracker" id="r2" />
-                            <Label htmlFor="r2">Tracker</Label>
-                            </div>
-                        </RadioGroup>
-                    </div>
-                    <div className="h-[500px] w-full rounded-lg overflow-hidden border">
-                        <Map
-                            defaultCenter={{ lat: -1.292066, lng: 36.821945 }}
-                            defaultZoom={13}
-                            gestureHandling={'greedy'}
-                            disableDefaultUI={true}
-                            mapId="outreachrx_map"
-                        >
-                            {hotspots.map(hotspot => (
-                                <Marker key={hotspot.id} position={{ lat: hotspot.lat, lng: hotspot.lng }} />
-                            ))}
-                        </Map>
-                    </div>
+                <div className="mb-4">
+                    <RadioGroup defaultValue="hotspots" className="flex gap-4">
+                        <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="hotspots" id="r1" />
+                        <Label htmlFor="r1">Hotspots</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="tracker" id="r2" />
+                        <Label htmlFor="r2">Tracker</Label>
+                        </div>
+                    </RadioGroup>
+                </div>
+                <div className="h-[500px] w-full rounded-lg overflow-hidden border">
+                    <Map
+                        defaultCenter={{ lat: -1.292066, lng: 36.821945 }}
+                        defaultZoom={13}
+                        gestureHandling={'greedy'}
+                        disableDefaultUI={true}
+                        mapId="outreachrx_map"
+                    >
+                        {hotspots.map(hotspot => (
+                            <Marker key={hotspot.id} position={{ lat: hotspot.lat, lng: hotspot.lng }} />
+                        ))}
+                    </Map>
                 </div>
                  <p className="text-xs text-muted-foreground mt-2">Heatmap layer visualization coming soon.</p>
             </CardContent>
