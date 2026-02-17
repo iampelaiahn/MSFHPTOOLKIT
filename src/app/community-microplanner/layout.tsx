@@ -38,42 +38,38 @@ export default function CommunityMicroplannerLayout({
   children: ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className="font-body antialiased">
-        <SidebarProvider>
-          <div className="flex min-h-screen w-full flex-col bg-background">
-            <Sidebar>
-              <SidebarHeader>
-                <Logo />
-              </SidebarHeader>
-              <SidebarContent>
-                <SidebarMenu>
-                  {navItems.map((item) => (
-                    <SidebarMenuItem key={item.label}>
-                      <Link href={item.href} passHref>
-                        <SidebarMenuButton tooltip={item.label}>
-                          <item.icon />
-                          <span>{item.label}</span>
-                        </SidebarMenuButton>
-                      </Link>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarContent>
-              <SidebarFooter />
-            </Sidebar>
-            <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-              <DashboardHeader 
-                title="Community Microplanner"
-                user={{ name: 'John Doe', avatarId: 'community-microplanner-avatar' }}
-              />
-              <main className="flex-1 p-4 sm:px-6 sm:py-0 md:gap-8">
-                {children}
-              </main>
-            </div>
-          </div>
-        </SidebarProvider>
-      </body>
-    </html>
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full flex-col bg-background">
+        <Sidebar>
+          <SidebarHeader>
+            <Logo />
+          </SidebarHeader>
+          <SidebarContent>
+            <SidebarMenu>
+              {navItems.map((item) => (
+                <SidebarMenuItem key={item.label}>
+                  <Link href={item.href} passHref>
+                    <SidebarMenuButton tooltip={item.label}>
+                      <item.icon />
+                      <span>{item.label}</span>
+                    </SidebarMenuButton>
+                  </Link>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarContent>
+          <SidebarFooter />
+        </Sidebar>
+        <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+          <DashboardHeader 
+            title="Community Microplanner"
+            user={{ name: 'John Doe', avatarId: 'community-microplanner-avatar' }}
+          />
+          <main className="flex-1 p-4 sm:px-6 sm:py-0 md:gap-8">
+            {children}
+          </main>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }
