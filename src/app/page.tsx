@@ -52,7 +52,7 @@ export default function Home() {
         <div className="mb-12 text-center">
           <Logo className="justify-center text-5xl mb-4" />
           <h1 className="text-4xl font-headline font-bold tracking-tight text-foreground sm:text-5xl">
-            OutreachRx
+            Health promotion toolkit
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
             Microplanning for Community Health Outreach
