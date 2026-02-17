@@ -13,7 +13,7 @@ const analysisCards = [
       { label: "82% VERIFICATION" },
       { label: "14% HIGH RISK" },
     ],
-    href: "#",
+    href: "/community-mobiliser/assessment-repo",
   },
   {
     title: "Hotspot Profiler",
@@ -23,7 +23,7 @@ const analysisCards = [
       { label: "12 SITES MAPPED" },
       { label: "92% COVERAGE" },
     ],
-    href: "#",
+    href: "/master-supervisor/hotspot-profiler",
   },
   {
     title: "Social Network Analysis",
@@ -33,7 +33,7 @@ const analysisCards = [
       { label: "142 TRUST NODES" },
       { label: "18 BRIDGES" },
     ],
-    href: "#",
+    href: "/master-supervisor/social-network-analysis",
   },
 ];
 
