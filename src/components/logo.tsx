@@ -3,13 +3,13 @@ import Image from "next/image";
 
 export function Logo({ className }: { className?: string }) {
   return (
-    <div className={cn("flex items-center justify-center h-[44px]", className)}>
+    <div className={cn("flex items-center justify-center h-[44px] mt-2", className)}>
       <Image
         className="group-data-[state=collapsed]:hidden"
         src="https://i.imgur.com/ZZopidV.png"
         alt="OutreachRx Logo"
-        width={163}
-        height={44}
+        width={114}
+        height={31}
         priority
       />
       <Image

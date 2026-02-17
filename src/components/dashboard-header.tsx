@@ -31,10 +31,7 @@ export function DashboardHeader({ title, user }: DashboardHeaderProps) {
   const avatar = PlaceHolderImages.find((img) => img.id === user.avatarId);
 
   return (
-    <header className="flex h-16 items-center gap-4 border-b bg-card px-4 md:px-6 sticky top-0 z-30">
-        <div className="flex-1">
-          <h1 className="font-headline text-lg font-semibold md:text-2xl">{title}</h1>
-        </div>
+    <header className="fixed top-0 right-0 left-0 sm:left-14 z-30 flex h-16 items-center gap-4 border-b bg-card px-4 md:px-6">
       <div className="flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
         <form className="ml-auto flex-1 sm:flex-initial">
           <div className="relative">

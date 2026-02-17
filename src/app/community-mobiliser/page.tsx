@@ -30,14 +30,16 @@ export default function CommunityMobiliserPage() {
   }, [searchParams]);
 
   return (
-    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full pt-6">
-      <TabsList className="grid w-full grid-cols-5">
-        <TabsTrigger value="synthesis">Synthesis Dashboard</TabsTrigger>
-        <TabsTrigger value="geospatial">Geospatial View</TabsTrigger>
-        <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        <TabsTrigger value="reports">Reports</TabsTrigger>
-        <TabsTrigger value="inventory">Inventory</TabsTrigger>
-      </TabsList>
+    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+      <div className="sticky top-16 z-20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pb-2">
+        <TabsList className="grid w-full grid-cols-5">
+          <TabsTrigger value="synthesis">Synthesis Dashboard</TabsTrigger>
+          <TabsTrigger value="geospatial">Geospatial View</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="reports">Reports</TabsTrigger>
+          <TabsTrigger value="inventory">Inventory</TabsTrigger>
+        </TabsList>
+      </div>
       <TabsContent value="synthesis">
         <SynthesisDashboard />
       </TabsContent>

@@ -39,8 +39,7 @@ export default function CommunityMicroplannerLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full flex-col bg-background">
-        <Sidebar collapsible="icon">
+        <Sidebar collapsible="icon" variant="floating">
           <SidebarHeader>
             <Logo />
           </SidebarHeader>
@@ -58,18 +57,18 @@ export default function CommunityMicroplannerLayout({
               ))}
             </SidebarMenu>
           </SidebarContent>
+          <span className="text-xs font-semibold text-sidebar-foreground/70 text-center px-2 pb-1 group-data-[collapsible=icon]:hidden">Community Microplanner</span>
           <SidebarFooter />
         </Sidebar>
-        <div className="flex flex-col sm:pl-14">
+        <div className="flex flex-1 flex-col">
           <DashboardHeader 
             title="Community Microplanner"
             user={{ name: 'John Doe', avatarId: 'community-microplanner-avatar' }}
           />
-          <main className="flex-1 p-4 sm:px-6 sm:py-4 mt-4 sm:mt-0 md:gap-8">
+          <main className="flex-1 px-4 pb-4 sm:px-6 mt-16">
             {children}
           </main>
         </div>
-      </div>
     </SidebarProvider>
   );
 }
