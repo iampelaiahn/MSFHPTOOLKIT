@@ -40,7 +40,7 @@ export default function CommunityMicroplannerLayout({
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full flex-col bg-background">
-        <Sidebar>
+        <Sidebar collapsible="icon">
           <SidebarHeader>
             <Logo />
           </SidebarHeader>
