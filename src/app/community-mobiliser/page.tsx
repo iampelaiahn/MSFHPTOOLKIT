@@ -3,12 +3,13 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SynthesisDashboard } from "./_components/synthesis-dashboard";
 import { GeospatialView } from "./_components/geospatial-view";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { GoogleMapsProvider } from "./_components/google-maps-provider";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { TrendingUp, Users, Link as LinkIcon, Target } from "lucide-react";
 import { InventoryDashboard } from "./_components/inventory-dashboard";
+import { AIReportGenerator } from "./_components/ai-report-generator";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const kpiData = [
   { title: "Total Referrals", value: "1,284", change: "+20.1% from last month", icon: Users },
@@ -65,15 +66,7 @@ export default function CommunityMobiliserPage() {
         </div>
       </TabsContent>
       <TabsContent value="reports">
-        <Card>
-            <CardHeader>
-                <CardTitle>Reports</CardTitle>
-                <CardDescription>Generate and view automated performance reports.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <p>Report generation and viewing functionality will be available here.</p>
-            </CardContent>
-        </Card>
+        <AIReportGenerator />
       </TabsContent>
        <TabsContent value="inventory" className="mt-0">
         <InventoryDashboard />
