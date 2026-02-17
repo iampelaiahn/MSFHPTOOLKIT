@@ -18,6 +18,7 @@ export function Logo({ className }: { className?: string }) {
         alt="OutreachRx Icon"
         width={28}
         height={28}
+        style={{ mixBlendMode: 'screen' }}
       />
     </div>
   );
