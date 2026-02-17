@@ -18,16 +18,6 @@ const analysisCards = [
     href: "/community-mobiliser/assessment-repo/risk-intelligence",
   },
   {
-    title: "Hotspot Profiler",
-    description: "Capture site-specific PSE and structural barriers.",
-    iconColor: "bg-chart-2",
-    stats: [
-      { label: "12 SITES MAPPED" },
-      { label: "92% COVERAGE" },
-    ],
-    href: "/master-supervisor/hotspot-profiler",
-  },
-  {
     title: "Social Network Analysis",
     description: "Visualize peer-to-peer trust networks and nano-networks.",
     iconColor: "bg-primary",
@@ -53,7 +43,7 @@ export function ToolsManagementDashboard() {
           </Button>
         </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6">
         {analysisCards.map((card) => (
           <Card key={card.title} className="flex flex-col border-primary/20 bg-card hover:border-primary/50 transition-colors duration-300">
             <CardHeader>
