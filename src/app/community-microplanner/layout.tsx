@@ -27,7 +27,7 @@ const navItems = [
   { href: '/community-microplanner', label: 'My Tasks', icon: Home },
   { href: '#hotspots', label: 'Hotspot Diary', icon: MapPin },
   { href: '/community-microplanner/risk-assessment', label: 'Risk Assessment', icon: ShieldCheck },
-  { href: '#hivst', label: 'HIVST Register', icon: Users },
+  { href: '/community-microplanner/hivst-register', label: 'HIVST Register', icon: Users },
   { href: '#refer', label: 'Refer a Peer', icon: QrCode },
   { href: '#education', label: 'Health Education', icon: BookHeart },
 ];

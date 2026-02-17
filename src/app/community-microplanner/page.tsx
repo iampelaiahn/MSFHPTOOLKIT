@@ -1,7 +1,7 @@
 import { TaskList } from "./_components/task-list";
 import { ReferralGenerator } from "./_components/referral-generator";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookHeart, Users } from "lucide-react";
+import { BookHeart } from "lucide-react";
 
 export default function CommunityMicroplannerPage() {
   return (
@@ -11,15 +11,6 @@ export default function CommunityMicroplannerPage() {
         <ReferralGenerator />
       </div>
       <div className="space-y-6">
-        <Card id="hivst">
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2"><Users /> HIVST Register</CardTitle>
-                <CardDescription>Log self-test kit distribution and results.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <p className="text-sm text-muted-foreground">Module for HIVST Register coming soon.</p>
-            </CardContent>
-        </Card>
         <Card id="education">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2"><BookHeart /> Health Education</CardTitle>
