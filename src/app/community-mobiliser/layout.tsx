@@ -4,6 +4,7 @@ import {
   Map,
   FileText,
   Package,
+  User,
 } from 'lucide-react';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -56,7 +57,12 @@ export default function CommunityMobiliserLayout({
             </SidebarMenu>
           </SidebarContent>
           <SidebarFooter>
-            <span className="text-xs font-semibold text-sidebar-foreground/70 text-center group-data-[collapsible=icon]:hidden">Community Health Mobiliser</span>
+            <div className="flex items-center justify-center gap-2 group-data-[collapsible=icon]:hidden">
+              <User className="h-4 w-4 text-sidebar-foreground/70" />
+              <span className="text-xs font-semibold text-sidebar-foreground/70">
+                Community Health Mobiliser
+              </span>
+            </div>
           </SidebarFooter>
         </Sidebar>
         <div className="flex flex-1 flex-col">
