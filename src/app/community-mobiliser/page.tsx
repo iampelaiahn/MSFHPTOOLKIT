@@ -10,6 +10,8 @@ import { TrendingUp, Users, Link as LinkIcon, Target } from "lucide-react";
 import { InventoryDashboard } from "./_components/inventory-dashboard";
 import { AIReportGenerator } from "./_components/ai-report-generator";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ClientOnly } from "@/components/client-only";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const kpiData = [
   { title: "Total Referrals", value: "1,284", change: "+20.1% from last month", icon: Users },
@@ -30,47 +32,56 @@ export default function CommunityMobiliserPage() {
     }
   }, [searchParams]);
 
+  const TabsSkeleton = (
+    <div className="space-y-4">
+      <Skeleton className="h-10 w-full" />
+      <Skeleton className="h-[600px] w-full" />
+    </div>
+  );
+
   return (
-    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-      <div className="sticky top-16 z-20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pb-2">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="inventory">Inventory</TabsTrigger>
-          <TabsTrigger value="synthesis">Synthesis Dashboard</TabsTrigger>
-          <TabsTrigger value="geospatial">Geospatial View</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          <TabsTrigger value="reports">Reports</TabsTrigger>
-        </TabsList>
-      </div>
-      <TabsContent value="synthesis">
-        <SynthesisDashboard />
-      </TabsContent>
-      <TabsContent value="geospatial">
-         <GoogleMapsProvider>
-            <GeospatialView />
-        </GoogleMapsProvider>
-      </TabsContent>
-      <TabsContent value="analytics">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {kpiData.map((kpi) => (
-              <Card key={kpi.title}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">{kpi.title}</CardTitle>
-                  <kpi.icon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                  <div className="text-2xl font-bold">{kpi.value}</div>
-                  <p className={`text-xs ${kpi.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>{kpi.change}</p>
-              </CardContent>
-              </Card>
-          ))}
+    <ClientOnly fallback={<TabsSkeleton />}>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <div className="sticky top-16 z-20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pb-2">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="inventory">Inventory</TabsTrigger>
+            <TabsTrigger value="synthesis">Synthesis Dashboard</TabsTrigger>
+            <TabsTrigger value="geospatial">Geospatial View</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="reports">Reports</TabsTrigger>
+          </TabsList>
         </div>
-      </TabsContent>
-      <TabsContent value="reports">
-        <AIReportGenerator />
-      </TabsContent>
-       <TabsContent value="inventory" className="mt-0">
-        <InventoryDashboard />
-      </TabsContent>
-    </Tabs>
+        <TabsContent value="synthesis">
+          <SynthesisDashboard />
+        </TabsContent>
+        <TabsContent value="geospatial">
+          <GoogleMapsProvider>
+              <GeospatialView />
+          </GoogleMapsProvider>
+        </TabsContent>
+        <TabsContent value="analytics">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {kpiData.map((kpi) => (
+                <Card key={kpi.title}>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">{kpi.title}</CardTitle>
+                    <kpi.icon className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">{kpi.value}</div>
+                    <p className={`text-xs ${kpi.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>{kpi.change}</p>
+                </CardContent>
+                </Card>
+            ))}
+          </div>
+        </TabsContent>
+        <TabsContent value="reports">
+          <AIReportGenerator />
+        </TabsContent>
+        <TabsContent value="inventory" className="mt-0">
+          <InventoryDashboard />
+        </TabsContent>
+      </Tabs>
+    </ClientOnly>
   );
 }
