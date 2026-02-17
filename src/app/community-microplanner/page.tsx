@@ -1,6 +1,5 @@
 import { TaskList } from "./_components/task-list";
 import { ReferralGenerator } from "./_components/referral-generator";
-import { RiskAssessment } from "./_components/risk-assessment";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookHeart, Users } from "lucide-react";
 
@@ -12,7 +11,6 @@ export default function CommunityMicroplannerPage() {
         <ReferralGenerator />
       </div>
       <div className="space-y-6">
-        <RiskAssessment />
         <Card id="hivst">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2"><Users /> HIVST Register</CardTitle>
