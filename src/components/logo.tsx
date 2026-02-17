@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { Stethoscope } from "lucide-react";
 
 export function Logo({ className }: { className?: string }) {
   return (
@@ -13,7 +12,13 @@ export function Logo({ className }: { className?: string }) {
         height={44}
         priority
       />
-      <Stethoscope className="h-7 w-7 text-primary hidden group-data-[state=collapsed]:block" />
+      <Image
+        className="hidden group-data-[state=collapsed]:block"
+        src="https://i.imgur.com/ccXkOzW.png"
+        alt="OutreachRx Icon"
+        width={28}
+        height={28}
+      />
     </div>
   );
 }
