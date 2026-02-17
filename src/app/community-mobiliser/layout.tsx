@@ -3,6 +3,7 @@ import {
   LineChart,
   Map,
   FileText,
+  Package,
 } from 'lucide-react';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -26,6 +27,7 @@ const navItems = [
   { href: '/community-mobiliser', label: 'Geospatial View', icon: Map, query: { tab: 'geospatial' } },
   { href: '/community-mobiliser', label: 'Analytics', icon: LineChart, query: { tab: 'analytics' } },
   { href: '/community-mobiliser', label: 'Reports', icon: FileText, query: { tab: 'reports' } },
+  { href: '/community-mobiliser', label: 'Inventory', icon: Package, query: { tab: 'inventory' } },
 ];
 
 export default function CommunityMobiliserLayout({
@@ -61,7 +63,7 @@ export default function CommunityMobiliserLayout({
             title="Community Health Mobiliser" 
             user={{ name: 'Amina Yusuf', avatarId: 'community-mobiliser-avatar' }}
           />
-           <main className="flex-1 p-4 sm:px-6 sm:py-4 mt-4 sm:mt-0 md:gap-8">
+           <main className="flex-1 p-4 sm:px-6 sm:py-0">
             {children}
           </main>
         </div>

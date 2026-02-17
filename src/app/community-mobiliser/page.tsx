@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { GoogleMapsProvider } from "./_components/google-maps-provider";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { TrendingUp, Users, Link as LinkIcon, Target } from "lucide-react";
+import { TrendingUp, Users, Link as LinkIcon, Target, Package } from "lucide-react";
 
 const kpiData = [
   { title: "Total Referrals", value: "1,284", change: "+20.1% from last month", icon: Users },
@@ -29,12 +29,13 @@ export default function CommunityMobiliserPage() {
   }, [searchParams]);
 
   return (
-    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-      <TabsList className="grid w-full grid-cols-4">
+    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full pt-6">
+      <TabsList className="grid w-full grid-cols-5">
         <TabsTrigger value="synthesis">Synthesis Dashboard</TabsTrigger>
         <TabsTrigger value="geospatial">Geospatial View</TabsTrigger>
         <TabsTrigger value="analytics">Analytics</TabsTrigger>
         <TabsTrigger value="reports">Reports</TabsTrigger>
+        <TabsTrigger value="inventory">Inventory</TabsTrigger>
       </TabsList>
       <TabsContent value="synthesis">
         <SynthesisDashboard />
@@ -68,6 +69,17 @@ export default function CommunityMobiliserPage() {
             </CardHeader>
             <CardContent>
                 <p>Report generation and viewing functionality will be available here.</p>
+            </CardContent>
+        </Card>
+      </TabsContent>
+       <TabsContent value="inventory">
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2"><Package /> Inventory Management</CardTitle>
+                <CardDescription>Track and manage outreach supplies.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <p>Inventory management functionality will be available here.</p>
             </CardContent>
         </Card>
       </TabsContent>
