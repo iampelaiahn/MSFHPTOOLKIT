@@ -2,13 +2,16 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Info, Link2, Share2, User, UserPlus, Zap } from "lucide-react";
+import { useState, useRef, MouseEvent } from 'react';
 
-const nodes = [
+const initialNodes = [
   { id: 'sarah', name: 'SARAH', role: 'LEADER', x: '60%', y: '20%' },
   { id: 'mercy', name: 'MERCY', role: 'INFLUENCER', x: '75%', y: '50%' },
   { id: 'clara', name: 'CLARA', role: 'LEADER', x: '60%', y: '80%' },
   { id: 'john', name: 'JOHN', role: 'KP', x: '25%', y: '55%' },
 ];
+
+type NodeData = typeof initialNodes[number];
 
 const links = [
   { from: 'sarah', to: 'mercy', type: 'strong' },
@@ -16,7 +19,7 @@ const links = [
   { from: 'john', to: 'mercy', type: 'weak' },
 ];
 
-const Node = ({ node }: { node: typeof nodes[number] }) => {
+const Node = ({ node, onMouseDown }: { node: NodeData, onMouseDown: (e: MouseEvent<HTMLDivElement>) => void }) => {
   const getRoleStyles = () => {
     switch(node.role) {
       case 'LEADER':
@@ -49,7 +52,11 @@ const Node = ({ node }: { node: typeof nodes[number] }) => {
   const { icon, label, textColor } = getRoleStyles();
 
   return (
-    <div className="absolute text-center" style={{ top: node.y, left: node.x, transform: 'translate(-50%, -50%)' }}>
+    <div 
+        className="absolute text-center cursor-grab active:cursor-grabbing select-none" 
+        style={{ top: node.y, left: node.x, transform: 'translate(-50%, -50%)' }}
+        onMouseDown={onMouseDown}
+    >
       {icon}
       <p className={`mt-2 text-xs font-semibold ${textColor}`}>{node.name} <span className="text-muted-foreground">{label}</span></p>
     </div>
@@ -58,6 +65,37 @@ const Node = ({ node }: { node: typeof nodes[number] }) => {
 
 
 export function SocialNetworkMap() {
+    const [nodes, setNodes] = useState<NodeData[]>(initialNodes);
+    const [draggingNodeId, setDraggingNodeId] = useState<string | null>(null);
+    const mapRef = useRef<HTMLDivElement>(null);
+
+    const handleMouseDown = (nodeId: string) => (e: MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setDraggingNodeId(nodeId);
+    };
+
+    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+        if (!draggingNodeId || !mapRef.current) return;
+        
+        const mapRect = mapRef.current.getBoundingClientRect();
+        
+        let newXPercent = ((e.clientX - mapRect.left) / mapRect.width) * 100;
+        let newYPercent = ((e.clientY - mapRect.top) / mapRect.height) * 100;
+
+        newXPercent = Math.max(0, Math.min(100, newXPercent));
+        newYPercent = Math.max(0, Math.min(100, newYPercent));
+        
+        setNodes(prevNodes => 
+            prevNodes.map(node => 
+                node.id === draggingNodeId ? { ...node, x: `${newXPercent}%`, y: `${newYPercent}%` } : node
+            )
+        );
+    };
+
+    const handleMouseUp = () => {
+        setDraggingNodeId(null);
+    };
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-1 space-y-6">
@@ -110,7 +148,13 @@ export function SocialNetworkMap() {
                                 <p className="text-2xl font-bold text-primary">2.0</p>
                             </div>
                         </div>
-                        <div className="relative h-[600px] w-full rounded-lg border bg-background/50 overflow-hidden">
+                        <div 
+                            ref={mapRef}
+                            className="relative h-[600px] w-full rounded-lg border bg-background/50 overflow-hidden"
+                            onMouseMove={handleMouseMove}
+                            onMouseUp={handleMouseUp}
+                            onMouseLeave={handleMouseUp}
+                        >
                              <svg className="absolute inset-0 h-full w-full" width="100%" height="100%">
                                 {links.map((link, i) => {
                                     const fromNode = nodes.find(n => n.id === link.from);
@@ -131,7 +175,7 @@ export function SocialNetworkMap() {
                                     );
                                 })}
                             </svg>
-                            {nodes.map(node => <Node key={node.id} node={node} />)}
+                            {nodes.map(node => <Node key={node.id} node={node} onMouseDown={handleMouseDown(node.id)} />)}
                         </div>
                     </CardContent>
                 </Card>
