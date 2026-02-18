@@ -26,8 +26,7 @@ import { DashboardHeader } from '@/components/dashboard-header';
 import { Logo } from '@/components/logo';
 
 const navItems = [
-  { href: '/community-microplanner', label: 'My Tasks', icon: Home },
-  { href: '#hotspots', label: 'Hotspot Diary', icon: MapPin },
+  { href: '/community-microplanner', label: 'Hotspot Diary', icon: MapPin },
   { href: '/community-microplanner/risk-assessment', label: 'Risk Assessment', icon: ShieldCheck },
   { href: '/community-microplanner/hivst-register', label: 'HIVST Register', icon: Users },
   { href: '/community-microplanner/refer-a-peer', label: 'Refer a Peer', icon: QrCode },
