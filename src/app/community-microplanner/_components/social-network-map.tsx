@@ -53,12 +53,19 @@ const Node = ({ node, onMouseDown }: { node: NodeData, onMouseDown: (e: MouseEve
 
   return (
     <div 
-        className="absolute text-center cursor-grab active:cursor-grabbing select-none" 
-        style={{ top: node.y, left: node.x, transform: 'translate(-50%, -50%)' }}
+        className="absolute cursor-grab active:cursor-grabbing select-none" 
+        style={{ 
+            top: node.y, 
+            left: node.x, 
+            // This transform centers the icon on the coordinates, compensating for the text below it.
+            transform: 'translate(-50%, -50%) translateY(-0.75rem)',
+        }}
         onMouseDown={onMouseDown}
     >
-      {icon}
-      <p className={`mt-2 text-xs font-semibold ${textColor}`}>{node.name} <span className="text-muted-foreground">{label}</span></p>
+      <div className="flex flex-col items-center">
+        {icon}
+        <p className={`mt-2 text-xs font-semibold ${textColor}`}>{node.name} <span className="text-muted-foreground">{label}</span></p>
+      </div>
     </div>
   );
 }
@@ -160,17 +167,14 @@ export function SocialNetworkMap() {
                                     const fromNode = nodes.find(n => n.id === link.from);
                                     const toNode = nodes.find(n => n.id === link.to);
                                     if (!fromNode || !toNode) return null;
-                                    
-                                    // Offset to account for the text below the icon, ensuring the line points to the circle's center
-                                    const yOffset = "-0.75rem"; 
 
                                     return (
                                         <line
                                             key={i}
                                             x1={fromNode.x}
-                                            y1={`calc(${fromNode.y} + ${yOffset})`}
+                                            y1={fromNode.y}
                                             x2={toNode.x}
-                                            y2={`calc(${toNode.y} + ${yOffset})`}
+                                            y2={toNode.y}
                                             stroke={link.type === 'strong' ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))"}
                                             strokeWidth={link.type === 'strong' ? 2 : 1}
                                             strokeDasharray={link.type === 'weak' ? "5,5" : "none"}
