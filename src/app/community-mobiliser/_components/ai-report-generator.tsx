@@ -3,18 +3,66 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { getAiReportInsights, WeeklyReportInput, WeeklyReportOutput } from "@/ai/flows/community-mobiliser-ai-report-insights-flow";
-import { Bot, Loader2, Lightbulb, TrendingUp, AlertTriangle, FileWarning, CheckCircle, Activity, Link as LinkIcon, Users, MapPin, Package } from "lucide-react";
+import { HP_MonthlySitRepInput, HP_MonthlySitRepOutput, generateHpMonthlySitRep } from "@/ai/flows/hp-monthly-sitrep-flow";
+import { Bot, Loader2, FileWarning, BarChart, Users, Target, Droplets, Gift, ClipboardList } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import { ResponsiveContainer, BarChart as RechartsBarChart, XAxis, YAxis, Tooltip, Bar } from "recharts";
 
+// Mock data based on the new schema
+const mockReportInput: HP_MonthlySitRepInput = {
+    report_metadata: {
+        title: "Health Promotion Monthly Medical SitReport",
+        project: "Mbare Project",
+        department: "HEALTH PROMOTION",
+        period: "July 2025"
+    },
+    data: {
+        in_facility_metrics: {
+            total_reached: 1850,
+            group_sessions_count: 50,
+            reach_by_category: {
+                SW: 300,
+                General_Adolescents: 1400,
+                LGBTIQ: 100,
+                Drug_Users: 50,
+            }
+        },
+        out_of_facility_metrics: {
+            total_reached_out_of_facility: 1685,
+            reach_by_method: {
+                DHP: 800,
+                Face_to_face: 685,
+                Outreach: 100,
+                Group_sessions: 100,
+            }
+        },
+        health_services_cascade: {
+            HIVST_offered: 450,
+            HIVST_reactive: 25,
+            HIVST_linkage_to_prevention: 20,
+            Pregnancy_tests_total: 200,
+            Pregnancy_tests_positive: 30,
+            Referrals: {
+                ANC: 28,
+                FP: 15,
+            }
+        },
+        less_medicalized_model: {
+            condom_programming_reach: 520,
+            ECP_reach: 7,
+            menstrual_health_commodities_reach: 179,
+            commemorated_events_list: ["Ward 7 outreach", "Collaboration with GALZ"],
+        }
+    }
+};
 
 export function AIReportGenerator() {
-  const [result, setResult] = useState<WeeklyReportOutput | null>(null);
+  const [result, setResult] = useState<HP_MonthlySitRepOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [metadata, setMetadata] = useState(mockReportInput.report_metadata);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,30 +70,11 @@ export function AIReportGenerator() {
     setError(null);
     setResult(null);
 
-    // In a real application, this data would be fetched from various services/APIs.
-    // Here, we use mock data that demonstrates the AI's cross-checking capabilities.
-    const mockReportInput: WeeklyReportInput = {
-        communityData: {
-            peopleTested: 200,
-            hivstKitsDistributed: 200,
-            referralsMade: 150,
-        },
-        facilityData: {
-            referralsReconciled: 100, // Linkage rate is 100/150 = 66.7%, which is < 75%
-        },
-        inventoryData: {
-            hivstKitsDispensed: 215, // Mismatch: 215 kits dispensed vs. 200 people tested
-        },
-        geospatialData: {
-            hotspotCoverage: "88%",
-        }
-    };
-
     try {
-      const output = await getAiReportInsights(mockReportInput);
+      const output = await generateHpMonthlySitRep(mockReportInput);
       setResult(output);
     } catch (err) {
-      setError("Failed to generate insights. Please try again.");
+      setError("Failed to generate the SitRep. Please try again.");
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -56,90 +85,173 @@ export function AIReportGenerator() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>AI-Powered Weekly Report Generator</CardTitle>
+        <CardTitle>Health Promotion Monthly Medical SitReport</CardTitle>
         <CardDescription>
-          Automatically synthesize data from community, facility, and inventory modules to generate a comprehensive performance report with actionable insights.
+          Generate the {metadata.period} SitReport for the {metadata.project} project.
         </CardDescription>
       </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent>
-          <Button type="submit" disabled={isLoading}>
+      <CardContent>
+          <Button onClick={handleSubmit} disabled={isLoading}>
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Analyzing Data...
+                Generating Report...
               </>
             ) : (
               <>
                 <Bot className="mr-2 h-4 w-4" />
-                Generate Weekly Report
+                Generate HP Monthly SitRep
               </>
             )}
           </Button>
-        </CardContent>
-      </form>
-      <CardFooter className="flex flex-col items-start gap-4">
-        {error && (
+      </CardContent>
+      
+      {error && (
+        <CardFooter>
             <Alert variant="destructive">
                 <FileWarning className="h-4 w-4" />
                 <AlertTitle>Error</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
             </Alert>
-        )}
-        {result && (
-          <div className="w-full space-y-6 rounded-lg border bg-background p-6">
-            <div>
-                <h3 className="text-xl font-semibold flex items-center gap-2"><Activity /> Weekly Performance Summary</h3>
-                <p className="text-sm text-muted-foreground mt-2">{result.summary}</p>
-            </div>
-            
-            {result.dataDiscrepancies && result.dataDiscrepancies.length > 0 && (
-              <Alert variant="destructive">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertTitle>Data Discrepancies Found!</AlertTitle>
-                <AlertDescription>
-                  <ul className="list-disc pl-5 mt-2">
-                    {result.dataDiscrepancies.map((d, i) => <li key={i}>{d}</li>)}
-                  </ul>
-                </AlertDescription>
-              </Alert>
-            )}
+        </CardFooter>
+      )}
+      
+      {result && (
+        <CardContent className="space-y-8">
+            <Separator />
+            {/* In-facility */}
+            <section>
+                <h3 className="text-xl font-semibold flex items-center gap-2 mb-4"><Users/> Expected Result 1A (In-Facility)</h3>
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                    <KpiCard title="Total Adolescents Reached" value={result.inFacility.totalReached.toLocaleString()} target={result.inFacility.target.toLocaleString()} />
+                    <KpiCard title="Group HP Sessions" value={result.inFacility.groupSessions.toLocaleString()} />
+                    <KpiCard title="SW Reached" value={result.inFacility.reachSW.toLocaleString()} />
+                    <KpiCard title="Drug Users Reached" value={result.inFacility.reachDrugUsers.toLocaleString()} />
+                </div>
+            </section>
 
-            <div className="space-y-2">
-                <h4 className="font-semibold text-lg flex items-center gap-2"><TrendingUp /> Key Metrics</h4>
-                 <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-[200px]">Metric</TableHead>
-                      <TableHead>Value</TableHead>
-                      <TableHead>Insight</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {result.keyMetrics.map((item) => (
-                      <TableRow key={item.metric}>
-                        <TableCell className="font-medium">{item.metric}</TableCell>
-                        <TableCell>
-                          <Badge variant={item.metric === 'Linkage Rate' && parseFloat(item.value.split('(')[1]) < 75 ? 'destructive' : 'secondary'}>{item.value}</Badge>
-                        </TableCell>
-                        <TableCell>{item.insight || "N/A"}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-            </div>
+             {/* Out-of-facility */}
+            <section>
+                <h3 className="text-xl font-semibold flex items-center gap-2 mb-4"><Target/> Expected Result 2 (Out-of-Facility)</h3>
+                <p className="text-muted-foreground mb-4">{result.outOfFacility.summary}</p>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-lg flex items-center gap-2"><BarChart/> Reach Means</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                             <ResponsiveContainer width="100%" height={250}>
+                                <RechartsBarChart data={result.outOfFacility.reachMeansChartData}>
+                                    <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} />
+                                    <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} />
+                                    <Tooltip contentStyle={{ backgroundColor: "hsl(var(--background))", borderColor: "hsl(var(--border))" }} />
+                                    <Bar dataKey="value" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                                </RechartsBarChart>
+                            </ResponsiveContainer>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                         <CardHeader>
+                            <CardTitle className="text-lg flex items-center gap-2"><Droplets/> Linkage to Care</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                             <Table>
+                                <TableBody>
+                                    {result.outOfFacility.linkageToCareTable.map(row => (
+                                        <TableRow key={row.indicator}>
+                                            <TableCell className="font-medium">{row.indicator}</TableCell>
+                                            <TableCell className="text-right font-bold">{row.result}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </CardContent>
+                    </Card>
+                </div>
+            </section>
+
+             {/* Less Medicalized */}
+             <section>
+                <h3 className="text-xl font-semibold flex items-center gap-2 mb-4"><Gift/> Expected Result 5 & 6</h3>
+                 <div className="grid gap-4 md:grid-cols-3">
+                    <KpiCard title="Condoms Distributed" value={result.lessMedicalizedModel.condomsDistributed.toLocaleString()} />
+                    <KpiCard title="ECP Distributed" value={result.lessMedicalizedModel.ecpDistributed.toLocaleString()} />
+                    <KpiCard title="Menstrual Hygiene Kits" value={result.lessMedicalizedModel.menstrualHygieneDistributed.toLocaleString()} />
+                </div>
+                <div className="mt-4">
+                    <h4 className="font-semibold mb-2">Outreach Events:</h4>
+                    <ul className="list-disc pl-5 text-muted-foreground">
+                        {result.lessMedicalizedModel.outreachEvents.map((event, i) => <li key={i}>{event}</li>)}
+                    </ul>
+                </div>
+            </section>
             
-            <div className="space-y-2">
-                <h4 className="font-semibold text-lg flex items-center gap-2"><Lightbulb /> Actionable Insights</h4>
-                <ul className="space-y-2 list-disc pl-5">
-                  {result.actionableInsights.map((point, index) => (
-                    <li key={`insight-${index}`} className="text-sm text-foreground/90">{point}</li>
-                  ))}
-                </ul>
-            </div>
-          </div>
-        )}
-      </CardFooter>
+            {/* Operational Summary */}
+            <section>
+                <h3 className="text-xl font-semibold flex items-center gap-2 mb-4"><ClipboardList/> Operational Summary</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-lg">Challenges & Actions</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Challenge</TableHead>
+                                        <TableHead>Action Taken</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                 <TableBody>
+                                    {result.operationalSummary.challengesTable.map(row => (
+                                        <TableRow key={row.challenge}>
+                                            <TableCell>{row.challenge}</TableCell>
+                                            <TableCell>{row.action}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </CardContent>
+                    </Card>
+                     <Card>
+                        <CardHeader>
+                            <CardTitle className="text-lg">Next Month’s Plans</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                                {result.operationalSummary.nextMonthPlans.map((plan, i) => <li key={i}>{plan}</li>)}
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </div>
+            </section>
+
+        </CardContent>
+      )}
     </Card>
   );
+}
+
+function KpiCard({ title, value, target }: { title: string, value: string, target?: string }) {
+    const isTargetApplicable = target !== undefined;
+    const valueNum = parseFloat(value.replace(/,/g, ''));
+    const targetNum = target ? parseFloat(target.replace(/,/g, '')) : 0;
+    const progress = isTargetApplicable ? (valueNum / targetNum) * 100 : 0;
+
+    return (
+        <Card>
+            <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium">{title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="text-2xl font-bold">{value}</div>
+                {isTargetApplicable && (
+                    <p className="text-xs text-muted-foreground">
+                        Target: {target} ({Math.round(progress)}%)
+                    </p>
+                )}
+            </CardContent>
+        </Card>
+    );
 }
