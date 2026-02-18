@@ -38,7 +38,7 @@ export function DashboardHeader({ title, user }: DashboardHeaderProps) {
  );
 
   return (
-    <header className="fixed top-0 right-0 left-0 sm:left-14 z-30 flex h-16 items-center gap-4 border-b bg-card px-4 md:px-6">
+    <header className="fixed top-0 right-0 left-0 z-30 flex h-16 items-center gap-4 border-b border-transparent bg-background/80 px-4 backdrop-blur-sm md:px-6">
       <div className="flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
         <form className="ml-auto flex-1 sm:flex-initial">
           <div className="relative">
@@ -46,7 +46,7 @@ export function DashboardHeader({ title, user }: DashboardHeaderProps) {
             <Input
               type="search"
               placeholder="Search..."
-              className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+              className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px] bg-card/50"
             />
           </div>
         </form>
