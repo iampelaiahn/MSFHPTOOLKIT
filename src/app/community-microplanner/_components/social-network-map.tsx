@@ -160,14 +160,17 @@ export function SocialNetworkMap() {
                                     const fromNode = nodes.find(n => n.id === link.from);
                                     const toNode = nodes.find(n => n.id === link.to);
                                     if (!fromNode || !toNode) return null;
+                                    
+                                    // Offset to account for the text below the icon, ensuring the line points to the circle's center
+                                    const yOffset = "-0.75rem"; 
 
                                     return (
                                         <line
                                             key={i}
                                             x1={fromNode.x}
-                                            y1={fromNode.y}
+                                            y1={`calc(${fromNode.y} + ${yOffset})`}
                                             x2={toNode.x}
-                                            y2={toNode.y}
+                                            y2={`calc(${toNode.y} + ${yOffset})`}
                                             stroke={link.type === 'strong' ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))"}
                                             strokeWidth={link.type === 'strong' ? 2 : 1}
                                             strokeDasharray={link.type === 'weak' ? "5,5" : "none"}
