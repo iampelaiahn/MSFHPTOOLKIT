@@ -23,9 +23,9 @@ import { Logo } from '@/components/logo';
 
 const navItems = [
   { href: '/master-supervisor', label: 'Dashboard', icon: Home },
-  { href: '/master-supervisor', label: 'Tool Designer', icon: Wrench, query: { tab: 'tools' } },
-  { href: '/master-supervisor', label: 'User Management', icon: Users, query: { tab: 'users' } },
-  { href: '/master-supervisor', label: 'AI Question Designer', icon: BotMessageSquare, query: { tab: 'ai-designer' } },
+  { href: '/master-supervisor/tool-designer', label: 'Tool Designer', icon: Wrench },
+  { href: '/master-supervisor/user-management', label: 'User Management', icon: Users },
+  { href: '/master-supervisor/ai-risk-question-designer', label: 'AI Question Designer', icon: BotMessageSquare },
 ];
 
 export default function MasterSupervisorLayout({
@@ -43,7 +43,7 @@ export default function MasterSupervisorLayout({
             <SidebarMenu>
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
-                  <Link href={{ pathname: item.href, query: item.query }} passHref>
+                  <Link href={item.href} passHref>
                     <SidebarMenuButton tooltip={item.label}>
                       <item.icon />
                       <span>{item.label}</span>
