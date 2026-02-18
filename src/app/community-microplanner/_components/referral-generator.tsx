@@ -3,18 +3,61 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { QrCode, Clipboard, RefreshCw } from "lucide-react";
-import { useState, useMemo } from "react";
+import { QrCode, Clipboard, RefreshCw, Loader2 } from "lucide-react";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useFirestore } from "@/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export function ReferralGenerator() {
     const { toast } = useToast();
+    const firestore = useFirestore();
     const [peerName, setPeerName] = useState("");
     const [referralId, setReferralId] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
-    const generateId = () => {
+    const generateId = async () => {
+        if (!firestore) {
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "Firestore is not available. Please try again later.",
+            });
+            return;
+        }
+        setIsLoading(true);
+
         const newId = `REF-${Math.random().toString(36).substr(2, 8).toUpperCase()}`;
-        setReferralId(newId);
+        const referralDate = new Date();
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        
+        try {
+            const referralsCollection = collection(firestore, "referrals");
+            await addDoc(referralsCollection, {
+                peerName: peerName || "Anonymous",
+                referralId: newId,
+                referralDate: serverTimestamp(),
+                month: monthNames[referralDate.getMonth()],
+                linked: false,
+                linkageDate: null,
+            });
+            
+            setReferralId(newId);
+            toast({
+              title: "Referral ID Generated!",
+              description: "The new referral has been saved.",
+            });
+
+        } catch (error) {
+            console.error("Error adding document: ", error);
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "Could not save the referral. Please try again.",
+            });
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleGenerate = (e: React.FormEvent) => {
@@ -40,15 +83,18 @@ export function ReferralGenerator() {
                 <CardContent className="space-y-4">
                     <div>
                         <Label htmlFor="peer-name">Peer's Name or ID (Optional)</Label>
-                        <Input id="peer-name" placeholder="e.g., Jane D. or #56GHY" value={peerName} onChange={(e) => setPeerName(e.target.value)} />
+                        <Input id="peer-name" placeholder="e.g., Jane D. or #56GHY" value={peerName} onChange={(e) => setPeerName(e.target.value)} disabled={isLoading} />
                     </div>
-                    <Button type="submit" className="w-full">
-                        <RefreshCw className="mr-2 h-4 w-4"/>
-                        Generate New Referral ID
+                    <Button type="submit" className="w-full" disabled={isLoading}>
+                         {isLoading ? (
+                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generating...</>
+                         ) : (
+                            <><RefreshCw className="mr-2 h-4 w-4"/> Generate New Referral ID</>
+                         )}
                     </Button>
                 </CardContent>
             </form>
-            {referralId && (
+            {referralId && !isLoading && (
                 <CardFooter className="flex flex-col items-start gap-4 border-t pt-6">
                     <div className="w-full space-y-2">
                         <Label htmlFor="referral-id">Generated Referral ID</Label>

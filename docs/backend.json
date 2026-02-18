@@ -1,0 +1,49 @@
+{
+  "entities": {
+    "Referral": {
+      "title": "Referral",
+      "description": "A referral for a peer from a community microplanner to a facility.",
+      "type": "object",
+      "properties": {
+        "peerName": {
+          "type": "string",
+          "description": "The name or ID of the peer being referred."
+        },
+        "referralId": {
+          "type": "string",
+          "description": "The unique ID for the referral."
+        },
+        "referralDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the referral was created."
+        },
+        "month": {
+            "type": "string",
+            "description": "The month the referral was created (e.g., 'Jan', 'Feb')."
+        },
+        "linked": {
+          "type": "boolean",
+          "description": "Whether the peer has been successfully linked to the facility."
+        },
+        "linkageDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the linkage was confirmed."
+        }
+      },
+      "required": ["referralId", "referralDate", "month", "linked"]
+    }
+  },
+  "auth": {
+    "providers": []
+  },
+  "firestore": {
+    "/referrals/{referralId}": {
+      "schema": {
+        "$ref": "#/backend/entities/Referral"
+      },
+      "description": "Stores all referral records."
+    }
+  }
+}
