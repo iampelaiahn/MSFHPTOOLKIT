@@ -4,28 +4,7 @@ import { Button } from "@/components/ui/button";
 import { TrendingUp } from "lucide-react";
 import Link from "next/link";
 
-const analysisCards = [
-  {
-    title: "Risk Assessment Intelligence",
-    description: "AI-powered vulnerability screening and clinical rationale.",
-    iconColor: "bg-primary",
-    stats: [
-      { label: "82% VERIFICATION" },
-      { label: "14% HIGH RISK" },
-    ],
-    href: "/community-mobiliser/assessment-repo",
-  },
-  {
-    title: "Social Network Analysis",
-    description: "Visualize peer-to-peer trust networks and nano-networks.",
-    iconColor: "bg-primary",
-    stats: [
-      { label: "142 TRUST NODES" },
-      { label: "18 BRIDGES" },
-    ],
-    href: "/community-mobiliser/assessment-repo/social-network-analysis",
-  },
-];
+const analysisCards: any[] = [];
 
 export function OverviewDashboard() {
   return (
