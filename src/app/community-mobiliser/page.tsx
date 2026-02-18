@@ -69,7 +69,7 @@ export default function CommunityMobiliserPage() {
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">{kpi.value}</div>
-                    <p className={`text-xs ${kpi.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>{kpi.change}</p>
+                    <p className={`text-xs ${kpi.change.startsWith('+') ? 'text-foreground' : 'text-destructive'}`}>{kpi.change}</p>
                 </CardContent>
                 </Card>
             ))}

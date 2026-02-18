@@ -55,10 +55,10 @@ export function ReferralReconciliation() {
                     </Alert>
                 )}
                 {foundPeer && (
-                    <Alert variant="default" className="bg-green-500/10 border-green-500/50 text-green-700 dark:text-green-400">
-                        <CheckCircle className="h-4 w-4 !text-green-500" />
-                        <AlertTitle className="text-green-800 dark:text-green-300">Peer Found & Linked!</AlertTitle>
-                        <AlertDescription className="dark:text-green-400">
+                    <Alert variant="default" className="border-primary/50">
+                        <CheckCircle className="h-4 w-4 !text-primary" />
+                        <AlertTitle className="text-primary">Peer Found & Linked!</AlertTitle>
+                        <AlertDescription>
                             Successfully linked <span className="font-bold">{foundPeer}</span>. The Community Health Mobiliser dashboard has been updated.
                         </AlertDescription>
                     </Alert>

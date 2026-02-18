@@ -25,9 +25,9 @@ export function RiskAssessment() {
   }, 0);
 
   const getRiskLevel = (s: number) => {
-    if (s <= 1) return { level: "Low Risk", color: "bg-green-500", badge: "default" };
-    if (s <= 3) return { level: "Medium Risk", color: "bg-yellow-500", badge: "secondary" };
-    return { level: "High Risk", color: "bg-red-500", badge: "destructive" };
+    if (s <= 1) return { level: "Low Risk", badge: "outline" };
+    if (s <= 3) return { level: "Medium Risk", badge: "secondary" };
+    return { level: "High Risk", badge: "destructive" };
   };
 
   const riskInfo = getRiskLevel(score);
@@ -59,7 +59,7 @@ export function RiskAssessment() {
         <div className="pt-4 border-t">
           <h3 className="text-lg font-semibold text-center mb-4">Risk Score</h3>
           <div className="flex items-center justify-center gap-4">
-            <TrendingDown className="text-green-500" />
+            <TrendingDown className="text-muted-foreground" />
             <div className="w-full">
               <Progress value={(score / 6) * 100} className="h-4" />
               <div className="flex justify-between text-xs mt-1 text-muted-foreground">
@@ -68,7 +68,7 @@ export function RiskAssessment() {
                 <span>6</span>
               </div>
             </div>
-            <TrendingUp className="text-red-500" />
+            <TrendingUp className="text-destructive" />
           </div>
           <div className="text-center mt-4">
             <p className="text-muted-foreground">Total Score: <span className="font-bold text-foreground text-xl">{score}</span>/6</p>

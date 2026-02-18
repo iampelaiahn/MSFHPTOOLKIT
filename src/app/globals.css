@@ -4,74 +4,74 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --background: 48 25% 93%; /* Matte White */
+    --foreground: 0 0% 3.9%; /* Near Black */
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 0 0% 96.1%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 97% 48%; /* Crimson Red */
+    --primary-foreground: 48 25% 93%; /* Matte White */
+    --secondary: 28 13% 85%; /* Lighter Ashy Grey */
     --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
+    --muted: 28 13% 85%;
     --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
+    --accent: 28 13% 80%; /* Ashy Grey */
     --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 222.2 84% 4.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 25 95% 53%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --destructive: 0 97% 48%; /* Crimson Red */
+    --destructive-foreground: 48 25% 93%; /* Matte White */
+    --border: 28 13% 75%; /* Darker Ashy Grey */
+    --input: 28 13% 75%;
+    --ring: 0 97% 48%; /* Crimson Red */
+    --chart-1: 0 97% 48%;
+    --chart-2: 0 80% 55%;
+    --chart-3: 0 70% 60%;
+    --chart-4: 0 60% 65%;
+    --chart-5: 0 50% 70%;
     --radius: 1.25rem;
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222.2 84% 4.9%;
-    --sidebar-primary: 222.2 47.4% 11.2%;
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 0 0% 96.1%;
+    --sidebar-foreground: 0 0% 3.9%;
+    --sidebar-primary: 0 97% 48%;
+    --sidebar-primary-foreground: 48 25% 93%;
+    --sidebar-accent: 28 13% 85%;
     --sidebar-accent-foreground: 0 0% 9%;
-    --sidebar-border: 0 0% 89.8%;
-    --sidebar-ring: 222.2 84% 4.9%;
+    --sidebar-border: 28 13% 75%;
+    --sidebar-ring: 0 97% 48%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 210 40% 98%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 25 95% 53%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 217.2 32.6% 17.5%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 210 40% 98%;
-    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
-    --sidebar-accent: 217.2 32.6% 17.5%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217.2 32.6% 17.5%;
-    --sidebar-ring: 210 40% 98%;
+    --background: 0 0% 0%; /* Obsidian Black */
+    --foreground: 48 25% 93%; /* Matte White */
+    --card: 0 0% 5%; /* Dark Grey */
+    --card-foreground: 48 25% 93%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 48 25% 93%;
+    --primary: 0 97% 48%; /* Crimson Red */
+    --primary-foreground: 48 25% 93%; /* Matte White */
+    --secondary: 0 0% 12%; /* Lighter Dark Grey */
+    --secondary-foreground: 48 25% 93%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 28 13% 60%; /* Ashy Grey for dark mode */
+    --accent: 0 0% 18%; /* Hover Grey */
+    --accent-foreground: 48 25% 93%;
+    --destructive: 0 97% 48%; /* Crimson Red */
+    --destructive-foreground: 48 25% 93%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 0 97% 48%; /* Crimson Red */
+    --chart-1: 0 97% 48%;
+    --chart-2: 0 80% 55%;
+    --chart-3: 0 70% 60%;
+    --chart-4: 0 60% 65%;
+    --chart-5: 0 50% 70%;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 48 25% 93%;
+    --sidebar-primary: 0 97% 48%;
+    --sidebar-primary-foreground: 48 25% 93%;
+    --sidebar-accent: 0 0% 18%;
+    --sidebar-accent-foreground: 48 25% 93%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 0 97% 48%;
   }
 }
 

@@ -108,7 +108,7 @@ export function ToolDesigner() {
                     <p className="text-sm text-muted-foreground">{tool.description}</p>
                 </div>
                 <div className="flex items-center gap-2 ml-4">
-                    <Badge variant={tool.status === 'Published' ? 'default' : 'destructive'} className={tool.status === 'Published' ? 'bg-green-600' : 'bg-amber-500'}>{tool.status}</Badge>
+                    <Badge variant={tool.status === 'Published' ? 'outline' : 'secondary'}>{tool.status}</Badge>
                     <Button variant="ghost" size="icon">
                         <Pencil className="h-4 w-4" />
                         <span className="sr-only">Edit</span>

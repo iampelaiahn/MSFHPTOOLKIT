@@ -61,7 +61,7 @@ export function UserManagement() {
                   <Badge variant={getRoleBadgeVariant(user.role)}>{user.role}</Badge>
                 </TableCell>
                 <TableCell>
-                  <Badge variant={user.status === "Active" ? "default" : "destructive"} className={user.status === "Active" ? "bg-green-600" : ""}>
+                  <Badge variant={user.status === "Active" ? "outline" : "destructive"}>
                     {user.status}
                   </Badge>
                 </TableCell>
