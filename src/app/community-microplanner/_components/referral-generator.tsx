@@ -74,7 +74,7 @@ export function ReferralGenerator() {
     };
 
     return (
-        <Card id="refer">
+        <Card>
             <CardHeader>
                 <CardTitle className="flex items-center gap-2"><QrCode/> Referral Handshake</CardTitle>
                 <CardDescription>Issue a digital referral for a peer to a facility.</CardDescription>
