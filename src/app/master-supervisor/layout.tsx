@@ -40,7 +40,7 @@ export default function MasterSupervisorLayout({
           <SidebarHeader>
             <Logo />
           </SidebarHeader>
-          <SidebarContent>
+          <SidebarContent className="pt-[10vh]">
             <SidebarMenu>
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
