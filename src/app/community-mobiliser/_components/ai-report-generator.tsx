@@ -4,12 +4,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { HP_MonthlySitRepInput, HP_MonthlySitRepOutput, generateHpMonthlySitRep } from "@/ai/flows/hp-monthly-sitrep-flow";
-import { Bot, Loader2, FileWarning, BarChart, Users, Target, Droplets, Gift, ClipboardList, Upload, FileDown, Share2 } from "lucide-react";
+import { Bot, Loader2, FileWarning, BarChart, Users, Target, Droplets, Gift, ClipboardList, Upload, FileDown, Share2, Pencil, Check, Trash2, PlusCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ResponsiveContainer, BarChart as RechartsBarChart, XAxis, YAxis, Tooltip, Bar } from "recharts";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 // Mock data based on the new schema
 const mockReportInput: HP_MonthlySitRepInput = {
@@ -64,6 +66,10 @@ export function AIReportGenerator() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [metadata, setMetadata] = useState(mockReportInput.report_metadata);
+  
+  const [isEditing, setIsEditing] = useState(false);
+  const [editableResult, setEditableResult] = useState<HP_MonthlySitRepOutput | null>(null);
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,6 +88,70 @@ export function AIReportGenerator() {
     }
   };
 
+  const handleEdit = () => {
+    if (!result) return;
+    setEditableResult(JSON.parse(JSON.stringify(result)));
+    setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setEditableResult(null);
+  };
+
+  const handleSave = () => {
+    if (!editableResult) return;
+    setResult(editableResult);
+    setIsEditing(false);
+    setEditableResult(null);
+    toast({
+      title: "Report Updated",
+      description: "Your changes have been saved locally.",
+    });
+  };
+
+  const handleChallengesChange = (index: number, field: 'challenge' | 'action', value: string) => {
+    if (!editableResult) return;
+    const newResult = { ...editableResult };
+    newResult.operationalSummary.challengesTable[index][field] = value;
+    setEditableResult(newResult);
+  };
+
+  const handleAddChallenge = () => {
+    if (!editableResult) return;
+    const newResult = { ...editableResult };
+    newResult.operationalSummary.challengesTable.push({ challenge: '', action: '' });
+    setEditableResult(newResult);
+  };
+
+  const handleDeleteChallenge = (index: number) => {
+    if (!editableResult) return;
+    const newResult = { ...editableResult };
+    newResult.operationalSummary.challengesTable.splice(index, 1);
+    setEditableResult(newResult);
+  };
+
+  const handlePlansChange = (index: number, value: string) => {
+    if (!editableResult) return;
+    const newResult = { ...editableResult };
+    newResult.operationalSummary.nextMonthPlans[index] = value;
+    setEditableResult(newResult);
+  };
+
+  const handleAddPlan = () => {
+    if (!editableResult) return;
+    const newResult = { ...editableResult };
+    newResult.operationalSummary.nextMonthPlans.push('');
+    setEditableResult(newResult);
+  };
+
+  const handleDeletePlan = (index: number) => {
+    if (!editableResult) return;
+    const newResult = { ...editableResult };
+    newResult.operationalSummary.nextMonthPlans.splice(index, 1);
+    setEditableResult(newResult);
+  };
+
 
   return (
     <Card>
@@ -93,7 +163,7 @@ export function AIReportGenerator() {
       </CardHeader>
       <CardContent>
           <div className="flex items-center gap-4">
-            <Button onClick={handleSubmit} disabled={isLoading}>
+            <Button onClick={handleSubmit} disabled={isLoading || isEditing}>
                 {isLoading ? (
                 <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -106,7 +176,11 @@ export function AIReportGenerator() {
                 </>
                 )}
             </Button>
-            {result && (
+            {result && !isEditing && (
+              <>
+                <Button variant="outline" onClick={handleEdit}>
+                  <Pencil className="mr-2 h-4 w-4" /> Edit
+                </Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline">
@@ -125,6 +199,17 @@ export function AIReportGenerator() {
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
+              </>
+            )}
+             {isEditing && (
+                <>
+                    <Button onClick={handleSave}>
+                        <Check className="mr-2 h-4 w-4" /> Save Changes
+                    </Button>
+                    <Button variant="ghost" onClick={handleCancel}>
+                        Cancel
+                    </Button>
+                </>
             )}
           </div>
       </CardContent>
@@ -215,8 +300,13 @@ export function AIReportGenerator() {
                 <h3 className="text-xl font-semibold flex items-center gap-2 mb-4"><ClipboardList/> Operational Summary</h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <Card>
-                        <CardHeader>
+                        <CardHeader className="flex flex-row items-center justify-between pb-4">
                             <CardTitle className="text-lg">Challenges & Actions</CardTitle>
+                             {isEditing && (
+                                <Button variant="outline" size="sm" onClick={handleAddChallenge}>
+                                    <PlusCircle className="mr-2 h-4 w-4" /> Add
+                                </Button>
+                            )}
                         </CardHeader>
                         <CardContent>
                             <Table>
@@ -224,13 +314,29 @@ export function AIReportGenerator() {
                                     <TableRow>
                                         <TableHead>Challenge</TableHead>
                                         <TableHead>Action Taken</TableHead>
+                                        {isEditing && <TableHead className="w-[50px]"></TableHead>}
                                     </TableRow>
                                 </TableHeader>
                                  <TableBody>
-                                    {result.operationalSummary.challengesTable.map(row => (
-                                        <TableRow key={row.challenge}>
-                                            <TableCell>{row.challenge}</TableCell>
-                                            <TableCell>{row.action}</TableCell>
+                                    {(isEditing ? editableResult! : result).operationalSummary.challengesTable.map((row, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>
+                                                {isEditing ? (
+                                                    <Input value={row.challenge} onChange={(e) => handleChallengesChange(index, 'challenge', e.target.value)} />
+                                                ) : row.challenge}
+                                            </TableCell>
+                                            <TableCell>
+                                                {isEditing ? (
+                                                    <Input value={row.action} onChange={(e) => handleChallengesChange(index, 'action', e.target.value)} />
+                                                ) : row.action}
+                                            </TableCell>
+                                            {isEditing && (
+                                                <TableCell>
+                                                    <Button variant="ghost" size="icon" onClick={() => handleDeleteChallenge(index)}>
+                                                        <Trash2 className="h-4 w-4 text-destructive" />
+                                                    </Button>
+                                                </TableCell>
+                                            )}
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -238,12 +344,30 @@ export function AIReportGenerator() {
                         </CardContent>
                     </Card>
                      <Card>
-                        <CardHeader>
+                        <CardHeader className="flex flex-row items-center justify-between pb-4">
                             <CardTitle className="text-lg">Next Month’s Plans</CardTitle>
+                             {isEditing && (
+                                <Button variant="outline" size="sm" onClick={handleAddPlan}>
+                                    <PlusCircle className="mr-2 h-4 w-4" /> Add
+                                </Button>
+                            )}
                         </CardHeader>
                         <CardContent>
-                            <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                                {result.operationalSummary.nextMonthPlans.map((plan, i) => <li key={i}>{plan}</li>)}
+                            <ul className="space-y-2">
+                                {(isEditing ? editableResult! : result).operationalSummary.nextMonthPlans.map((plan, i) => (
+                                    <li key={i} className="flex items-center gap-2">
+                                        {isEditing ? (
+                                            <>
+                                                <Input value={plan} onChange={(e) => handlePlansChange(i, e.target.value)} className="flex-grow" />
+                                                <Button variant="ghost" size="icon" onClick={() => handleDeletePlan(i)}>
+                                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                                </Button>
+                                            </>
+                                        ) : (
+                                            <span className="text-muted-foreground before:content-['•'] before:mr-2 before:inline-block">{plan}</span>
+                                        )}
+                                    </li>
+                                ))}
                             </ul>
                         </CardContent>
                     </Card>
