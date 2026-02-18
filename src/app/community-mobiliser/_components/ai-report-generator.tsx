@@ -4,11 +4,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { HP_MonthlySitRepInput, HP_MonthlySitRepOutput, generateHpMonthlySitRep } from "@/ai/flows/hp-monthly-sitrep-flow";
-import { Bot, Loader2, FileWarning, BarChart, Users, Target, Droplets, Gift, ClipboardList } from "lucide-react";
+import { Bot, Loader2, FileWarning, BarChart, Users, Target, Droplets, Gift, ClipboardList, Upload, FileDown, Share2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ResponsiveContainer, BarChart as RechartsBarChart, XAxis, YAxis, Tooltip, Bar } from "recharts";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 // Mock data based on the new schema
 const mockReportInput: HP_MonthlySitRepInput = {
@@ -91,19 +92,41 @@ export function AIReportGenerator() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-          <Button onClick={handleSubmit} disabled={isLoading}>
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Generating Report...
-              </>
-            ) : (
-              <>
-                <Bot className="mr-2 h-4 w-4" />
-                Generate HP Monthly SitRep
-              </>
+          <div className="flex items-center gap-4">
+            <Button onClick={handleSubmit} disabled={isLoading}>
+                {isLoading ? (
+                <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Generating Report...
+                </>
+                ) : (
+                <>
+                    <Bot className="mr-2 h-4 w-4" />
+                    Generate HP Monthly SitRep
+                </>
+                )}
+            </Button>
+            {result && (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline">
+                            <Upload className="mr-2 h-4 w-4" /> Publish
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem>
+                            <FileDown className="mr-2 h-4 w-4" /> Export
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Share2 className="mr-2 h-4 w-4" /> Share
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <ClipboardList className="mr-2 h-4 w-4" /> Post
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             )}
-          </Button>
+          </div>
       </CardContent>
       
       {error && (
