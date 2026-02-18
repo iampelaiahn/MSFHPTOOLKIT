@@ -2,7 +2,8 @@ import {
   Home,
   Users,
   Wrench,
-  BotMessageSquare
+  BotMessageSquare,
+  UserCog,
 } from 'lucide-react';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -53,8 +54,14 @@ export default function MasterSupervisorLayout({
               ))}
             </SidebarMenu>
           </SidebarContent>
-          <span className="text-xs font-semibold text-sidebar-foreground/70 text-center px-2 pb-1 group-data-[collapsible=icon]:hidden">Master Supervisor</span>
-          <SidebarFooter />
+          <SidebarFooter>
+            <div className="flex items-center justify-center gap-2 group-data-[collapsible=icon]:hidden">
+              <UserCog className="h-4 w-4 text-sidebar-foreground/70" />
+              <span className="text-xs font-semibold text-sidebar-foreground/70">
+                Master Supervisor
+              </span>
+            </div>
+          </SidebarFooter>
         </Sidebar>
         <div className="flex flex-1 flex-col">
           <DashboardHeader 
