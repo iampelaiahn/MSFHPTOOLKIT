@@ -43,7 +43,7 @@ export default function CommunityMicroplannerLayout({
           <SidebarHeader>
             <Logo />
           </SidebarHeader>
-          <SidebarContent>
+          <SidebarContent className="pt-[10vh]">
             <SidebarMenu>
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
