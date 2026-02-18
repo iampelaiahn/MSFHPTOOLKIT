@@ -12,7 +12,7 @@ import {ai} from '@/ai/genkit';
 import {z} from 'zod';
 
 // Based on the user's JSON schema for data retrieval
-export const HP_MonthlySitRepInputSchema = z.object({
+const HP_MonthlySitRepInputSchema = z.object({
   report_metadata: z.object({
     title: z.string(),
     project: z.string(),
@@ -61,7 +61,7 @@ export const HP_MonthlySitRepInputSchema = z.object({
 export type HP_MonthlySitRepInput = z.infer<typeof HP_MonthlySitRepInputSchema>;
 
 
-export const HP_MonthlySitRepOutputSchema = z.object({
+const HP_MonthlySitRepOutputSchema = z.object({
     inFacility: z.object({
         totalReached: z.number(),
         target: z.number(),
