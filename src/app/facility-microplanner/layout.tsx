@@ -4,6 +4,9 @@ import {
   ClipboardList,
   CalendarClock,
   BookHeart,
+  Network,
+  User,
+  RefreshCw,
 } from 'lucide-react';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -28,6 +31,9 @@ const navItems = [
   { href: '#log', label: 'Clinical Service Log', icon: ClipboardList },
   { href: '#appointments', label: 'Appointment Tracker', icon: CalendarClock },
   { href: '#education', label: 'Health Education', icon: BookHeart },
+  { href: '/facility-microplanner/social-map', label: 'Social Map', icon: Network },
+  { href: '/facility-microplanner/peer-profile', label: 'Peer Profile', icon: User },
+  { href: '/facility-microplanner/data-sync', label: 'Data Sync', icon: RefreshCw },
 ];
 
 export default function FacilityMicroplannerLayout({
@@ -55,8 +61,14 @@ export default function FacilityMicroplannerLayout({
               ))}
             </SidebarMenu>
           </SidebarContent>
-          <span className="text-xs font-semibold text-sidebar-foreground/70 text-center px-2 pb-1 group-data-[collapsible=icon]:hidden">Facility Microplanner</span>
-          <SidebarFooter />
+          <SidebarFooter>
+            <div className="flex items-center justify-center gap-2 group-data-[collapsible=icon]:hidden">
+                <User className="h-4 w-4 text-sidebar-foreground/70" />
+                <span className="text-xs font-semibold text-sidebar-foreground/70">
+                    Facility Microplanner
+                </span>
+            </div>
+          </SidebarFooter>
         </Sidebar>
         <div className="flex flex-1 flex-col">
           <DashboardHeader 
