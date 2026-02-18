@@ -32,7 +32,6 @@ const navItems = [
   { href: '#appointments', label: 'Appointment Tracker', icon: CalendarClock },
   { href: '#education', label: 'Health Education', icon: BookHeart },
   { href: '/facility-microplanner/social-map', label: 'Social Map', icon: Network },
-  { href: '/facility-microplanner/peer-profile', label: 'Peer Profile', icon: User },
   { href: '/facility-microplanner/data-sync', label: 'Data Sync', icon: RefreshCw },
 ];
 

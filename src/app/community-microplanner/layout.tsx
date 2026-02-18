@@ -6,7 +6,6 @@ import {
   BookHeart,
   QrCode,
   Network,
-  User,
   RefreshCw,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -34,7 +33,6 @@ const navItems = [
   { href: '/community-microplanner/refer-a-peer', label: 'Refer a Peer', icon: QrCode },
   { href: '/community-microplanner/health-education', label: 'Health Education', icon: BookHeart },
   { href: '/community-microplanner/social-map', label: 'Social Map', icon: Network },
-  { href: '/community-microplanner/peer-profile', label: 'Peer Profile', icon: User },
   { href: '/community-microplanner/data-sync', label: 'Data Sync', icon: RefreshCw },
 ];
 
