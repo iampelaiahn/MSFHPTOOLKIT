@@ -63,41 +63,41 @@ const gridImageIds = [
 export default function Home() {
   
   const mainContent = (
-    <div className="flex flex-col items-center justify-center bg-black text-white p-8 z-10 w-full max-w-5xl mx-auto h-full">
+    <div className="flex flex-col items-center justify-center bg-black text-white p-6 z-10 w-full max-w-5xl h-full">
       <div className="text-center flex flex-col items-center">
          <Image
             src="https://i.imgur.com/BGdgfmI.png"
             alt="MSFIP Toolkit Logo"
-            width={120}
-            height={33}
-            className="mb-6"
+            width={100}
+            height={27}
+            className="mb-4"
             priority
           />
-        <h1 className="text-4xl font-headline font-bold tracking-tight text-white">
+        <h1 className="text-3xl font-headline font-bold tracking-tight text-white">
           Health promotion toolkit
         </h1>
-        <p className="mt-2 text-base text-neutral-400">
+        <p className="mt-2 text-sm text-neutral-400">
           Microplanning for Community Health Outreach
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full mt-8">
         {roles.map((role) => (
           <Card
             key={role.name}
-            className="flex flex-col bg-neutral-900 border border-neutral-800 text-white rounded-2xl p-6 text-left"
+            className="flex flex-col bg-neutral-900 border border-neutral-800 text-white rounded-xl p-4 text-left"
           >
             <CardHeader className="p-0 flex flex-col items-start">
-              <div className="mb-4 rounded-full bg-neutral-800 p-3 text-primary">
-                <role.icon className="h-6 w-6" />
+              <div className="mb-3 rounded-full bg-neutral-800 p-2 text-primary">
+                <role.icon className="h-5 w-5" />
               </div>
-              <CardTitle className="font-headline font-bold text-lg">{role.name}</CardTitle>
-              <CardDescription className="mt-2 text-sm text-neutral-400 min-h-[84px]">
+              <CardTitle className="font-headline font-bold text-base">{role.name}</CardTitle>
+              <CardDescription className="mt-1 text-xs text-neutral-400">
                 {role.description}
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-0 mt-auto flex">
-              <Button asChild variant="default" className="w-full">
+            <CardContent className="p-0 mt-auto flex pt-4">
+              <Button asChild variant="default" size="sm" className="w-full">
                 <Link href={role.href}>
                   Enter Dashboard <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
