@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Users, UserCog, Presentation, Hospital } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 type Role = {
   name: string;
@@ -45,54 +46,97 @@ const roles: Role[] = [
   },
 ];
 
+const gridImageIds = [
+    "landing-grid-1",
+    "landing-grid-2",
+    "landing-grid-3",
+    "landing-grid-4",
+    // placeholder for main content
+    null, 
+    "landing-grid-5",
+    "landing-grid-6",
+    "landing-grid-7",
+    "landing-grid-8",
+];
+
+
 export default function Home() {
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
-      <main className="flex flex-1 flex-col items-center justify-center">
-        <div className="mb-12 text-center flex flex-col items-center">
-           <Image
+  
+  const mainContent = (
+    <div className="flex flex-col items-center justify-center bg-black text-white p-8 rounded-2xl shadow-2xl z-10 w-full max-w-5xl mx-auto h-full">
+      <div className="text-center flex flex-col items-center">
+         <Image
             src="https://i.imgur.com/BGdgfmI.png"
             alt="Logo"
-            width={250}
-            height={69}
-            className="mb-6"
+            width={120}
+            height={33}
+            className="mb-4"
             priority
           />
-          <h1 className="text-4xl font-headline font-bold tracking-tight text-foreground sm:text-5xl">
-            Health promotion toolkit
-          </h1>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Microplanning for Community Health Outreach
-          </p>
-        </div>
+        <h1 className="text-4xl font-headline font-bold tracking-tight text-white">
+          Health promotion toolkit
+        </h1>
+        <p className="mt-1 text-base text-neutral-400">
+          Microplanning for Community Health Outreach
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl">
-          {roles.map((role) => (
-            <Card
-              key={role.name}
-              className="flex flex-col transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
-            >
-              <CardHeader className="flex flex-col items-center text-center">
-                <div className="mb-4 rounded-full bg-primary/10 p-4 text-primary">
-                  <role.icon className="h-10 w-10" />
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4 w-full mt-8">
+        {roles.map((role) => (
+          <Card
+            key={role.name}
+            className="flex flex-col bg-neutral-900/50 border border-neutral-800 text-white rounded-2xl p-4"
+          >
+            <CardHeader className="p-0 flex flex-col items-start text-left">
+              <div className="mb-3 rounded-lg bg-primary/10 p-2 text-primary">
+                <role.icon className="h-5 w-5" />
+              </div>
+              <CardTitle className="font-headline text-lg">{role.name}</CardTitle>
+              <CardDescription className="mt-1 text-xs text-left text-neutral-400 h-16">
+                {role.description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-0 mt-auto flex">
+              <Button asChild variant="default" size="sm" className="w-full">
+                <Link href={role.href}>
+                  Enter Dashboard <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="h-screen w-screen overflow-hidden bg-black">
+      <div className="h-full w-full grid grid-cols-1 md:grid-cols-3 grid-rows-3 gap-1">
+        {gridImageIds.map((id, index) => {
+            if (id === null) {
+                return (
+                    <div key="main-content" className="flex items-center justify-center bg-black overflow-hidden p-2">
+                        {mainContent}
+                    </div>
+                );
+            }
+            const img = PlaceHolderImages.find(i => i.id === id);
+            if (!img) return <div key={`empty-${index}`} className="bg-black" />;
+            
+            return (
+                <div key={img.id} className="overflow-hidden relative">
+                    <Image
+                        src={img.imageUrl}
+                        alt={img.description}
+                        fill
+                        className="object-cover w-full h-full"
+                        data-ai-hint={img.imageHint}
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                    />
                 </div>
-                <CardTitle className="font-headline text-2xl">{role.name}</CardTitle>
-                <CardDescription className="mt-2 text-base text-center h-16">{role.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="mt-auto flex justify-center">
-                <Button asChild className="w-full">
-                  <Link href={role.href}>
-                    Enter Dashboard <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </main>
-      <footer className="py-6 text-center text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} OutreachRx. All rights reserved.</p>
-      </footer>
+            );
+        })}
+      </div>
     </div>
   );
 }

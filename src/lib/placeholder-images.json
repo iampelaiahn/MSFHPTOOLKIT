@@ -23,6 +23,54 @@
       "description": "Avatar for Facility-Based Microplanner",
       "imageUrl": "https://images.unsplash.com/photo-1551884857-0ac9080b0178?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
       "imageHint": "clinic worker"
+    },
+    {
+      "id": "landing-grid-1",
+      "description": "Pink lightning graphic",
+      "imageUrl": "https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwaW5rJTIwYWJzdHJhY3R8ZW58MHx8fHwxNzcxNDg4NzM2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pink abstract"
+    },
+    {
+      "id": "landing-grid-2",
+      "description": "Woman's face",
+      "imageUrl": "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc3MTQyNzc1M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "landing-grid-3",
+      "description": "Orange lightning pattern",
+      "imageUrl": "https://images.unsplash.com/photo-1723055277915-e0cdb853aff5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8b3JhbmdlJTIwcGF0dGVybnxlbnwwfHx8fDE3NzE0ODg3Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "orange pattern"
+    },
+    {
+      "id": "landing-grid-4",
+      "description": "Black cat face",
+      "imageUrl": "https://images.unsplash.com/photo-1615000363959-e52262d2c75b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxibGFjayUyMGNhdHxlbnwwfHx8fDE3NzE0NjM1OTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "black cat"
+    },
+    {
+      "id": "landing-grid-5",
+      "description": "Person in a starry robe",
+      "imageUrl": "https://images.unsplash.com/photo-1771358342588-d70d654968e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjb3NtaWMlMjBmYXNoaW9ufGVufDB8fHx8MTc3MTQ4ODczN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cosmic fashion"
+    },
+    {
+      "id": "landing-grid-6",
+      "description": "Green abstract shapes",
+      "imageUrl": "https://images.unsplash.com/photo-1722782375267-1c0e7cb27f8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxncmVlbiUyMGdlb21ldHJ5fGVufDB8fHx8MTc3MTQ4ODczN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "green geometry"
+    },
+    {
+      "id": "landing-grid-7",
+      "description": "Motel keys and device",
+      "imageUrl": "https://images.unsplash.com/photo-1609514235215-f7ee72e48cf2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx2aW50YWdlJTIwa2V5c3xlbnwwfHx8fDE3NzE0ODg3Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vintage keys"
+    },
+    {
+      "id": "landing-grid-8",
+      "description": "Abstract gradient",
+      "imageUrl": "https://images.unsplash.com/photo-1604339452935-cd07199f204e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxncmFkaWVudCUyMGJsdXJ8ZW58MHx8fHwxNzcxNDg4NzM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "gradient blur"
     }
   ]
 }
