@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { Baby, Droplets, HeartHandshake, Shield, Stethoscope, Users, BrainCircuit, MessageSquare, HandHelping, BookOpen, UserCheck, HeartPulse, Scale, Zap } from 'lucide-react';
+import { Baby, Droplets, HeartHandshake, Shield, Stethoscope, Users, BrainCircuit, MessageSquare, HandHelping, BookOpen, UserCheck, HeartPulse, Scale } from 'lucide-react';
 
 export type CurriculumUnit = {
   title: string;
@@ -19,47 +19,48 @@ export type LearningCluster = {
 
 export const healthCurriculum: LearningCluster[] = [
   {
+    id: 'cluster-d',
+    title: "Cluster 1: Foundations of Peer Education",
+    subtitle: 'Trainer Tools (Facilitator Only)',
+    icon: BookOpen,
+    units: [
+      { unit: 'Units 1 & 2', title: 'MSF & Peer Education', description: 'Role of a peer educator as an "Ambassador of Health" to build trust and promote behavior change.', icon: BookOpen },
+      { unit: 'Unit 13', title: 'Communication Skills', description: 'Core skills like active listening, open-ended questions, empathy, and showing empathy without giving unsolicited advice.', icon: MessageSquare },
+      { unit: 'Units 14 & 15', title: 'Self-Care & Commitments', description: 'Focus on avoiding burnout, managing stress, and maintaining strict confidentiality ("Do No Harm").', icon: HandHelping },
+    ],
+  },
+  {
     id: 'cluster-a',
-    title: 'Cluster A: Body & Autonomy',
+    title: 'Cluster 2: Body, Hygiene, & Development',
     subtitle: 'The Basics',
     icon: Baby,
     units: [
-      { unit: 'Unit 3', title: 'Growth & Development', description: 'Interactive timeline showing physical and emotional changes during adolescence.', icon: UserCheck, interactiveElement: 'body-map' },
-      { unit: 'Unit 4', title: 'Menstrual Hygiene Management', description: 'Visual guides on period tracking, hygiene products, and breaking stigma.', icon: Droplets },
-      { unit: 'Unit 12', title: 'Water, Sanitation, and Hygiene (WASH)', description: 'Integrating basic hygiene into overall sexual health.', icon: HandHelping },
+      { unit: 'Unit 3', title: 'Growth & Development', description: 'Explains puberty as a normal physical, emotional, and social transition. Covers body changes and emotions.', icon: UserCheck, interactiveElement: 'body-map' },
+      { unit: 'Unit 4', title: 'Menstrual Hygiene Management', description: 'Facts on tracking cycles, hygiene, managing cramps, and debunking myths about menstruation.', icon: Droplets },
+      { unit: 'Unit 12', title: 'Water, Sanitation, and Hygiene (WASH)', description: 'Connecting basic hygiene like handwashing to overall reproductive health and disease prevention.', icon: HandHelping },
     ],
   },
   {
     id: 'cluster-b',
-    title: 'Cluster B: Safe Sex & Prevention',
+    title: 'Cluster 3 & 4: SRH & Disease Prevention',
     subtitle: 'The Core CSE',
     icon: Shield,
     units: [
-      { unit: 'Unit 5', title: 'Sexual and Reproductive Health (SRH)', description: 'Core concepts of consent, bodily autonomy, and healthy relationships.', icon: HeartHandshake, interactiveElement: 'scenario-tree' },
-      { unit: 'Unit 8', title: 'Contraception', description: 'A "Method Matcher" tool for Pills, Condoms, Implants, etc.', icon: Scale, interactiveElement: 'method-matcher' },
-      { unit: 'Unit 6', title: 'HIV and AIDS', description: 'Visual breakdown of transmission, prevention (PrEP/PEP), and U=U.', icon: HeartPulse, interactiveElement: 'myth-fact' },
-      { unit: 'Unit 7', title: 'Sexually Transmitted Infections (STIs)', description: 'Symptom checkers and treatment pathways.', icon: Stethoscope, interactiveElement: 'myth-fact' },
+      { unit: 'Unit 5', title: 'Gender and SRH', description: 'Covers the difference between Sex and Gender, bodily autonomy, consent, and healthy relationships.', icon: HeartHandshake, interactiveElement: 'scenario-tree' },
+      { unit: 'Unit 8', title: 'Contraception', description: 'A "Method Matcher" for short-acting and long-acting methods, focusing on effectiveness, side effects, and myths.', icon: Scale, interactiveElement: 'method-matcher' },
+      { unit: 'Unit 6', title: 'HIV and AIDS', description: 'Explains transmission, prevention (Condoms, PrEP, PEP), and the core message of U=U (Undetectable = Untransmittable).', icon: HeartPulse, interactiveElement: 'myth-fact' },
+      { unit: 'Unit 7', title: 'Sexually Transmitted Infections (STIs)', description: 'Information on common STIs, asymptomatic cases, and when to seek immediate clinic referral.', icon: Stethoscope, interactiveElement: 'myth-fact' },
     ],
   },
   {
     id: 'cluster-c',
-    title: 'Cluster C: Safety, Mind, & Society',
+    title: 'Cluster 5: Vulnerability, Violence, & Mental Health',
     subtitle: 'Holistic Health',
     icon: Users,
     units: [
-      { unit: 'Unit 10', title: 'Intimate Partner Violence (IPV)', description: 'Red flags vs. Green flags, safety planning, and reporting mechanisms.', icon: Shield, interactiveElement: 'scenario-tree' },
-      { unit: 'Unit 11', title: 'Mental Health', description: 'Coping mechanisms, stress, and intersection with HIV/SRH.', icon: BrainCircuit },
-      { unit: 'Unit 9', title: 'Working with Key Populations', description: 'Empathy, reducing stigma, and understanding diverse identities.', icon: Users },
-    ],
-  },
-    {
-    id: 'cluster-d',
-    title: "Cluster D: Peer Educator's Dashboard",
-    subtitle: 'Trainer Tools (Facilitator Only)',
-    icon: BookOpen,
-    units: [
-      { unit: 'Units 1, 2 & 16', title: 'MSF & Peer Education Methods', description: 'Intro to MSF, methodologies, and tool usage.', icon: BookOpen },
-      { unit: 'Units 13, 14 & 15', title: 'Core Facilitator Skills', description: 'Communication, Self-Care, and Behavioral Commitments.', icon: MessageSquare },
+      { unit: 'Unit 9', title: 'Working with Key Populations', description: 'How to provide stigma-free support for Sex Workers, Transgender individuals, MSM, and PWID.', icon: Users },
+      { unit: 'Unit 10', title: 'IPV & Sexual Violence', description: 'Covers physical, emotional, and sexual abuse, plus psychological first aid and referral pathways.', icon: Shield, interactiveElement: 'scenario-tree' },
+      { unit: 'Unit 11', title: 'Mental Health', description: 'Coping mechanisms for stress and anxiety, especially for youth living with HIV or facing stigma.', icon: BrainCircuit },
     ],
   },
 ];
