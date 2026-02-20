@@ -13,7 +13,7 @@ import {z} from 'genkit';
 
 const MasterSupervisorAiRiskQuestionDesignerInputSchema = z
   .string()
-  .describe('A natural language description of the risk factor.');
+  .describe(`A natural language description of the risk factor.`);
 export type MasterSupervisorAiRiskQuestionDesignerInput = z.infer<
   typeof MasterSupervisorAiRiskQuestionDesignerInputSchema
 >;
@@ -21,10 +21,10 @@ export type MasterSupervisorAiRiskQuestionDesignerInput = z.infer<
 const MasterSupervisorAiRiskQuestionDesignerOutputSchema = z.object({
   question: z
     .string()
-    .describe('The generated concise risk assessment question.'),
+    .describe(`The generated concise risk assessment question.`),
   formula: z
     .string()
-    .describe('The generated Excel-like logical formula for the risk assessment.'),
+    .describe(`The generated Excel-like logical formula for the risk assessment.`),
 });
 export type MasterSupervisorAiRiskQuestionDesignerOutput = z.infer<
   typeof MasterSupervisorAiRiskQuestionDesignerOutputSchema
@@ -51,12 +51,12 @@ Formula: 'IF(AlcoholConsumptionPerWeek > 3, TRUE, FALSE)'
 
 Example:
 Description: 'Risk if the client is under 18 years old and consent was not obtained.'
-Question: 'Please confirm the client\'s age and if consent was obtained.'
+Question: 'Please confirm the client's age and if consent was not obtained.'
 Formula: 'IF(AND(Age < 18, ConsentObtained = FALSE), TRUE, FALSE)'
 
 Example:
 Description: 'Risk factor if BMI is over 25.'
-Question: 'What is the client\'s Body Mass Index (BMI)?'
+Question: 'What is the client's Body Mass Index (BMI)?'
 Formula: 'IF(BMI > 25, TRUE, FALSE)'
 
 Description: '{{{description}}}'

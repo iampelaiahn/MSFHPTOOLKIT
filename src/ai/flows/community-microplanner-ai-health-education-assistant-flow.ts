@@ -14,17 +14,17 @@ const GenerateHealthEducationInputSchema = z.object({
   riskProfile: z
     .string()
     .describe(
-      'The risk profile of the Key Population member, e.g., "high risk due to substance use and multiple partners."
+      `The risk profile of the Key Population member, e.g., "high risk due to substance use and multiple partners."`
     ),
   needs: z
     .string()
     .describe(
-      'Specific health education needs of the Key Population member, e.g., "condom negotiation skills, STI prevention, mental health support."
+      `Specific health education needs of the Key Population member, e.g., "condom negotiation skills, STI prevention, mental health support."`
     ),
   kpDemographics: z
     .string()
     .describe(
-      'Demographic information for cultural sensitivity, e.g., "25-year-old male, identifies as LGBTQ+, speaks Swahili, lives in an urban setting."
+      `Demographic information for cultural sensitivity, e.g., "25-year-old male, identifies as LGBTQ+, speaks Swahili, lives in an urban setting."`
     ),
 });
 export type GenerateHealthEducationInput = z.infer<
@@ -35,7 +35,7 @@ const GenerateHealthEducationOutputSchema = z.object({
   educationPoints: z
     .array(z.string())
     .describe(
-      'An array of culturally sensitive and personalized health education talking points or interactive questions.'
+      `An array of culturally sensitive and personalized health education talking points or interactive questions.`
     ),
 });
 export type GenerateHealthEducationOutput = z.infer<
