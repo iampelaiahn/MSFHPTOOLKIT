@@ -2,10 +2,8 @@ import { HealthEducationAssistant } from "../_components/health-education-assist
 
 export default function HealthEducationPage() {
   return (
-    <div className="flex justify-center items-start py-8">
-      <div className="w-full max-w-4xl">
-        <HealthEducationAssistant />
-      </div>
+    <div className="py-8">
+      <HealthEducationAssistant />
     </div>
   );
 }

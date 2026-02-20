@@ -1,127 +1,275 @@
 'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { generateHealthEducationContent, GenerateHealthEducationInput } from "@/ai/flows/community-microplanner-ai-health-education-assistant-flow";
-import { Bot, Loader2, ListOrdered } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useState, useMemo } from 'react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { healthCurriculum, mythFactData, type CurriculumUnit } from '../_data/health-curriculum';
+import { BookHeart, ChevronLeft, Eye, EyeOff, Languages, ShieldAlert, Zap } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Alert, AlertTitle } from '@/components/ui/alert';
 
 export function HealthEducationAssistant() {
-  const [formData, setFormData] = useState<GenerateHealthEducationInput>({
-    riskProfile: "",
-    needs: "",
-    kpDemographics: "",
-  });
-  const [result, setResult] = useState<string[] | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [selectedUnit, setSelectedUnit] = useState<CurriculumUnit | null>(null);
+  const [quickExit, setQuickExit] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.riskProfile || !formData.needs || !formData.kpDemographics) {
-        setError("Please fill out all fields.");
-        return;
-    };
-
-    setIsLoading(true);
-    setError(null);
-    setResult(null);
-
-    try {
-      const output = await generateHealthEducationContent(formData);
-      setResult(output.educationPoints);
-    } catch (err) {
-      setError("Failed to generate content. Please try again.");
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { id, value } = e.target;
-    setFormData(prev => ({ ...prev, [id]: value }));
+  if (quickExit) {
+    return (
+      <div className="w-full h-[80vh] bg-background flex flex-col items-center justify-center gap-4">
+        <h1 className="text-2xl font-bold">My Calendar</h1>
+        <p className="text-muted-foreground">Session interrupted. Displaying a neutral screen.</p>
+        <Button onClick={() => setQuickExit(false)}>Return to Session</Button>
+      </div>
+    )
   }
 
+  const handleUnitSelect = (unit: CurriculumUnit) => {
+    setSelectedUnit(unit);
+  };
+
+  const handleBack = () => {
+    setSelectedUnit(null);
+  };
+
   return (
-    <Card id="education">
-      <CardHeader>
-        <CardTitle>AI Health Education Assistant</CardTitle>
-        <CardDescription>
-          Generate culturally sensitive and personalized health education talking points or interactive questions for Community-Based Microplanners.
-        </CardDescription>
-      </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
-          <div className="grid w-full gap-1.5">
-            <Label htmlFor="kpDemographics">Key Population Demographics</Label>
-            <Textarea
-              id="kpDemographics"
-              placeholder='e.g., "25-year-old male, identifies as LGBTQ+, speaks Swahili, lives in an urban setting."'
-              value={formData.kpDemographics}
-              onChange={handleInputChange}
-              disabled={isLoading}
-              rows={3}
-            />
-          </div>
-          <div className="grid w-full gap-1.5">
-            <Label htmlFor="riskProfile">Risk Profile</Label>
-            <Textarea
-              id="riskProfile"
-              placeholder='e.g., "High risk due to substance use and multiple partners."'
-              value={formData.riskProfile}
-              onChange={handleInputChange}
-              disabled={isLoading}
-              rows={3}
-            />
-          </div>
-          <div className="grid w-full gap-1.5">
-            <Label htmlFor="needs">Specific Health Needs</Label>
-            <Textarea
-              id="needs"
-              placeholder='e.g., "Condom negotiation skills, STI prevention, mental health support."'
-              value={formData.needs}
-              onChange={handleInputChange}
-              disabled={isLoading}
-              rows={3}
-            />
-          </div>
-          <Button type="submit" disabled={isLoading || !formData.riskProfile || !formData.needs || !formData.kpDemographics}>
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Generating...
-              </>
-            ) : (
-              <>
-                <Bot className="mr-2 h-4 w-4" />
-                Generate Talking Points
-              </>
-            )}
+    <div className="w-full">
+      <div className="flex justify-between items-center mb-4">
+        {selectedUnit ? (
+          <Button variant="ghost" onClick={handleBack}>
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            Back to Curriculum
           </Button>
-        </CardContent>
-      </form>
-      <CardFooter className="flex flex-col items-start gap-4">
-        {error && (
-            <Alert variant="destructive">
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-            </Alert>
+        ) : (
+          <h1 className="text-2xl font-bold flex items-center gap-2">
+            <BookHeart /> CSE Curriculum
+          </h1>
         )}
-        {result && (
-          <div className="w-full space-y-4 rounded-lg border bg-background p-4">
-            <h3 className="font-semibold text-lg flex items-center gap-2"><ListOrdered /> Generated Talking Points</h3>
-            <ul className="space-y-2 list-disc pl-5">
-              {result.map((point, index) => (
-                <li key={index} className="text-sm text-foreground/90">{point}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </CardFooter>
-    </Card>
+
+        <div className="flex items-center gap-2">
+            <Button variant="outline" size="icon" title="Change Language">
+                <Languages className="h-4 w-4" />
+                <span className="sr-only">Change Language</span>
+            </Button>
+            <Button variant="destructive" size="icon" title="Quick Exit" onClick={() => setQuickExit(true)}>
+                <ShieldAlert className="h-4 w-4" />
+                <span className="sr-only">Quick Exit</span>
+            </Button>
+        </div>
+      </div>
+
+      {selectedUnit ? (
+        <UnitDetail unit={selectedUnit} />
+      ) : (
+        <Accordion type="single" collapsible className="w-full" defaultValue="cluster-a">
+          {healthCurriculum.map((cluster) => (
+            <AccordionItem key={cluster.id} value={cluster.id}>
+              <AccordionTrigger className="text-lg font-semibold hover:no-underline">
+                <div className="flex items-center gap-3">
+                  <cluster.icon className="h-6 w-6 text-primary" />
+                  <div>
+                    {cluster.title}
+                    <p className="text-sm font-normal text-muted-foreground">{cluster.subtitle}</p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="pl-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-4">
+                  {cluster.units.map((unit) => (
+                    <Card key={unit.title} className="flex flex-col hover:bg-accent/50 transition-colors">
+                      <CardHeader>
+                        <div className="flex items-center gap-3">
+                          <unit.icon className="h-8 w-8 text-muted-foreground" />
+                          <div>
+                            <CardTitle className="text-base">{unit.title}</CardTitle>
+                            <CardDescription className="text-xs">{unit.unit}</CardDescription>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="flex-grow">
+                        <p className="text-sm text-muted-foreground">{unit.description}</p>
+                      </CardContent>
+                      <CardFooter>
+                        <Button className="w-full" onClick={() => handleUnitSelect(unit)} disabled={!unit.interactiveElement}>
+                           <Zap className="mr-2 h-4 w-4" /> Start Module
+                           {!unit.interactiveElement && <span className="text-xs ml-2">(Coming Soon)</span>}
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      )}
+    </div>
   );
+}
+
+function UnitDetail({ unit }: { unit: CurriculumUnit }) {
+    const [viewMode, setViewMode] = useState<'facilitator' | 'visual'>('facilitator');
+
+    const renderInteractiveElement = () => {
+        switch(unit.interactiveElement) {
+            case 'myth-fact':
+                const dataKey = unit.title.toLowerCase().includes('hiv') ? 'hiv-aids' : 'stis';
+                const data = mythFactData[dataKey as keyof typeof mythFactData];
+                return <MythFactSwiper data={data} />;
+            // Add other cases here for scenario-tree, body-map etc.
+            default:
+                return <p className="text-muted-foreground">Interactive module for "{unit.title}" is under development.</p>;
+        }
+    }
+
+    return (
+        <Card>
+            <CardHeader>
+                 <CardTitle className="flex items-center gap-3 text-xl">
+                    <unit.icon className="h-6 w-6 text-primary"/>
+                    {unit.title}
+                </CardTitle>
+                <CardDescription>{unit.description}</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="mb-4">
+                    <p className="text-sm font-semibold mb-2">View Mode</p>
+                    <div className="flex items-center gap-2">
+                        <Button variant={viewMode === 'facilitator' ? 'default' : 'outline'} onClick={() => setViewMode('facilitator')}>
+                           <EyeOff className="mr-2" /> Facilitator Script
+                        </Button>
+                         <Button variant={viewMode === 'visual' ? 'default' : 'outline'} onClick={() => setViewMode('visual')}>
+                           <Eye className="mr-2" /> Visual Aid
+                        </Button>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 min-h-[400px]">
+                    <div className={cn("p-4 rounded-lg bg-background/50 border", viewMode === 'visual' && 'hidden md:block')}>
+                        <h3 className="font-bold mb-2">Facilitator Script</h3>
+                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
+                            <li>Welcome the peer and introduce the topic: {unit.title}.</li>
+                            <li>Explain the goal of the session is to learn and discuss openly.</li>
+                            <li>Use the interactive tool on the right to guide the conversation.</li>
+                            <li>Ask open-ended questions like "What have you heard about this?"</li>
+                            <li>Emphasize that there are no stupid questions.</li>
+                            <li>Check for understanding at the end and offer resources.</li>
+                        </ul>
+                    </div>
+                     <div className={cn("p-4 rounded-lg bg-background/50 border", viewMode === 'facilitator' && 'hidden md:block')}>
+                         <h3 className="font-bold mb-2 text-center md:text-left">Visual Aid</h3>
+                        <div className="flex items-center justify-center h-full">
+                           {renderInteractiveElement()}
+                        </div>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+    )
+}
+
+type MythFactCard = {
+  statement: string;
+  isMyth: boolean;
+  explanation: string;
+}
+
+function MythFactSwiper({ data }: { data: MythFactCard[] }) {
+    const [cards, setCards] = useState(data);
+    const [result, setResult] = useState<'myth' | 'fact' | 'correct' | 'incorrect' | null>(null);
+    const activeIndex = cards.length - 1;
+
+    const handleAnswer = (userChoice: 'myth' | 'fact') => {
+        if (!activeCard) return;
+        const isCorrect = (userChoice === 'myth' && activeCard.isMyth) || (userChoice === 'fact' && !activeCard.isMyth);
+        setResult(isCorrect ? 'correct' : 'incorrect');
+
+        setTimeout(() => {
+            setResult(activeCard.isMyth ? 'myth' : 'fact');
+            setTimeout(() => {
+                 setCards(prev => prev.slice(0, prev.length - 1));
+                 setResult(null);
+            }, 2500)
+        }, 1000)
+    }
+
+    const activeCard = useMemo(() => cards.length > 0 ? cards[activeIndex] : null, [cards, activeIndex]);
+
+    if (!activeCard) {
+        return (
+            <div className="text-center">
+                <p className="font-semibold text-lg">Module Complete!</p>
+                <p className="text-muted-foreground">You've gone through all the cards.</p>
+                <Button onClick={() => setCards(data)} className="mt-4">Restart</Button>
+            </div>
+        )
+    }
+
+    return (
+        <div className="w-full max-w-sm mx-auto flex flex-col items-center">
+             <div className="relative w-full h-64">
+                <AnimatePresence>
+                    <motion.div
+                        key={activeCard.statement}
+                        className={cn(
+                            "absolute w-full h-full rounded-xl border p-6 flex flex-col items-center justify-center text-center shadow-lg",
+                            result === 'correct' ? 'bg-green-500/20 border-green-500' : '',
+                            result === 'incorrect' ? 'bg-red-500/20 border-red-500' : '',
+                            !result && 'bg-card'
+                            )}
+                        initial={{ scale: 0.9, y: 20, opacity: 0 }}
+                        animate={{ scale: 1, y: 0, opacity: 1 }}
+                        exit={{ x: result === 'myth' ? -300 : 300, opacity: 0, scale: 0.8, transition: { duration: 0.3 } }}
+                        drag="x"
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={0.2}
+                        onDragEnd={(e, { offset }) => {
+                            if (offset.x < -100) handleAnswer('myth');
+                            if (offset.x > 100) handleAnswer('fact');
+                        }}
+                    >
+                        <AnimatePresence mode="wait">
+                            <motion.p 
+                                key={result ? 'explanation' : 'statement'}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="font-semibold"
+                            >
+                                {result === 'myth' || result === 'fact' ? activeCard.explanation : activeCard.statement}
+                            </motion.p>
+                        </AnimatePresence>
+                    </motion.div>
+                </AnimatePresence>
+            </div>
+            
+            <div className="mt-6 flex w-full justify-around">
+                <Button 
+                    variant="outline" 
+                    className="w-32 h-16 text-lg border-red-500 hover:bg-red-500/10 text-red-500 hover:text-red-500"
+                    onClick={() => handleAnswer('myth')}
+                    disabled={!!result}
+                >
+                    Myth
+                </Button>
+                <Button 
+                    variant="outline" 
+                    className="w-32 h-16 text-lg border-green-500 hover:bg-green-500/10 text-green-500 hover:text-green-500"
+                    onClick={() => handleAnswer('fact')}
+                    disabled={!!result}
+                >
+                    Fact
+                </Button>
+            </div>
+            {result && (result === 'correct' || result === 'incorrect') && (
+                <Alert className={cn("mt-4", result === 'correct' ? 'border-green-500 text-green-500' : 'border-red-500 text-red-500')}>
+                    <AlertTitle>{result === 'correct' ? 'Correct!' : 'Incorrect'}</AlertTitle>
+                </Alert>
+            )}
+        </div>
+    )
 }
